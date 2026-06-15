@@ -10,5 +10,5 @@ pinned: true
 author: 瀚祥
 ---
 
-<iframe width="100%" height="468" src="https://www.bilibili.com/video/BV1g99EBqEHJ/?spm_id_from=333.1387.homepage.video_card.click&vd_source=1c9065d205e085ba8e5bcae832b957f9" title="分享好用的电脑软件" frameborder="0" allowfullscreen></iframe>
+<iframe width="100%" height="468" src="https://player.bilibili.com/player.html?bvid=BV1g99EBqEHJ&p=1&autoplay=0" title="分享好用的电脑软件" frameborder="0" allowfullscreen></iframe>
 
