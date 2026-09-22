@@ -412,13 +412,10 @@ const archiveUrl = url("/archive/");
     updateCategoryBar();
     initScrollFeatures();
   });
-  document.addEventListener("swup:contentReplaced", () => {
-    updateCategoryBar();
-    // 某些 swup 生命周期下 URL/DOM 状态同步稍晚，下一帧再校正一次避免状态残留
-    requestAnimationFrame(() => {
-      updateCategoryBar();
-    });
-  });
+  // 注：原先还有一个 "swup:contentReplaced" 监听，内容是 updateCategoryBar() 加"下一帧再校正一次"
+  //（原注释：某些 swup 生命周期下 URL/DOM 状态同步稍晚）。但该旧版事件名在 swup v4 中永不派发。
+  // 之所以不把那段"下一帧校正"搬到这里：astro:page-load 由 @swup/astro 在 page:view 时派发，
+  // 即整个 swup 访问流程结束后，DOM 与 URL 早已同步，原先为补偿 v3 更早的触发时机而加的校正已无必要。
 
   // 在 Swup 导航时提前更新状态，避免切换期间激活态闪烁
   function setupSwupEarlyUpdate() {

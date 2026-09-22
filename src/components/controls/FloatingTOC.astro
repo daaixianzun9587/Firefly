@@ -317,12 +317,9 @@ const sidebarPosition = sidebarLayoutConfig.position;
   if (typeof window !== "undefined" && !window.floatingTOCListenersInitialized) {
     window.floatingTOCListenersInitialized = true;
 
-    // Swup 路由切换
-    document.addEventListener("swup:contentReplaced", () => {
-      setTimeout(initFloatingTOC, 100);
-    });
-    
-    // Astro 页面切换事件
+    // Astro 页面切换事件（@swup/astro 在 swup 导航完成后派发，初始加载不触发）。
+    // 注：原先上方还有一个 "swup:contentReplaced" 监听做同样的事，但该旧版事件名在
+    // swup v4 中永不派发，属死代码，故移除。
     document.addEventListener("astro:page-load", () => {
       setTimeout(initFloatingTOC, 100);
     });

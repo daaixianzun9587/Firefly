@@ -78,17 +78,13 @@ onMount(() => {
 		updateDisplayedMode();
 	};
 
-	// 检查Swup是否已经加载
+	// 检查Swup是否已经加载。
+	// 注：原先还有一个 `else { addEventListener("swup:enable", …) }` 回退分支，
+	// 但 swup v4 不再派发 swup:enable（改为 hooks 与 astro:page-load），该分支永不触发，
+	// 属"看似有兜底、实则没有"，故移除。
 	const win = window as WindowWithSwup;
 	if (win.swup?.hooks) {
 		win.swup.hooks.on("content:replace", handleContentReplace);
-	} else {
-		document.addEventListener("swup:enable", () => {
-			const w = window as WindowWithSwup;
-			if (w.swup?.hooks) {
-				w.swup.hooks.on("content:replace", handleContentReplace);
-			}
-		});
 	}
 
 	// 监听主题变化事件

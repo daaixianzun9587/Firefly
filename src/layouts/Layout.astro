@@ -1684,8 +1684,8 @@ function disableAnimation() {
   }
 
   initImageLoadFadeIn();
+  // 注：原先还有一个 "swup:contentReplaced" 监听（内容是 requestAnimationFrame(initImageLoadFadeIn)），
+  // 但该旧版事件名在 swup v4 中永不派发，属死代码，故移除。此处直接调用即可：
+  // astro:page-load 在 swup 导航完成后派发，新 DOM 已就位。
   document.addEventListener('astro:page-load', initImageLoadFadeIn);
-  document.addEventListener('swup:contentReplaced', () => {
-    requestAnimationFrame(initImageLoadFadeIn);
-  });
 </script>
