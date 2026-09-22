@@ -1386,11 +1386,40 @@ function disableAnimation() {
 
 
   };
-  // 注：这里原先还有一个 `else { document.addEventListener("swup:enable", setup) }`
-  // 回退分支。但 swup v4 不再派发 swup:enable（改为 hooks 与 astro:page-load），该分支永不触发，
-  // 属"看似有兜底、实则没有"，故移除以免误导。
-  if (window?.swup?.hooks) {
+
+  // 等待 swup 就绪后「只调用一次」setup()。
+  //
+  // 为什么不能写成 `if (window?.swup?.hooks) setup()`：
+  //   1. swup 由 @swup/astro 在 window load 之后的空闲时机创建
+  //      （onIdleAfterLoad → onWindowLoad → requestIdleCallback）；
+  //      而本脚本是打包模块、只会执行一次 —— 执行到这里时 window.swup 基本一定还不存在。
+  //   2. 模块体在 swup 导航后不会重跑（ESM 模块缓存），所以也没有第二次机会。
+  //   实测确认：改前站内切页后，控制台不会出现 setup() 里 visit:end 钩子发出的日志
+  //   "Layout: 触发 firefly:page:loaded 事件" —— 即 setup() 从未执行，
+  //   其内部 7 个 swup 钩子（进度条 / 导航栏动画 / 全屏壁纸回顶 / 网格列数 / firefly:page:loaded 等）全部失效。
+  //
+  // 用轮询而不是监听事件：这里需要的是"swup 实例已可用"这个状态，它不是任何一个事件。
+  // 只调用一次：setup() 内部是 hooks.replace / hooks.on 注册，重复调用会重复挂钩子。
+  let swupHooksReady = false;
+  const setupSwupHooksOnce = () => {
+    if (swupHooksReady || !window?.swup?.hooks) return false;
+    swupHooksReady = true;
     setup();
+    return true;
+  };
+  if (!setupSwupHooksOnce()) {
+    let waited = 0;
+    const swupWaitTimer = window.setInterval(() => {
+      waited += 50;
+      if (setupSwupHooksOnce() || waited >= 10000) {
+        window.clearInterval(swupWaitTimer);
+        if (!swupHooksReady) {
+          console.warn(
+            "[swup] 等待 swup 就绪超时（10s），Layout 的钩子未注册：进度条、导航栏自动隐藏、网格列数更新等可能不生效。"
+          );
+        }
+      }
+    }, 50);
   }
 
   document.addEventListener("astro:page-load", scheduleContentOverflowEnhancements);
