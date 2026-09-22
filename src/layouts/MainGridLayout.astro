@@ -17,6 +17,7 @@ import {
 	live2dWidgetConfig,
 	sidebarLayoutConfig,
 	siteConfig,
+	spineModelConfig,
 } from "@/config";
 import {
 	BANNER_HEIGHT,
@@ -894,7 +895,9 @@ const bannerCarouselInterval = Math.max(
             </div>
         </div>
 
-        <SpineModel></SpineModel>
+        {/* 看板娘按开关渲染：enable:false 时不再渲染组件，其内联脚本（约 15KB）也就不再注入页面。
+            与下一行的 Live2DWidget 保持一致；改配置即可重新启用。 */}
+        {spineModelConfig.enable && <SpineModel />}
         {live2dWidgetConfig.enable && <Live2DWidget config={live2dWidgetConfig} />}
     </div>
 </div>
