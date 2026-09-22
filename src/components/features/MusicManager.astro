@@ -1,5 +1,5 @@
 ---
-import { getMusicViewConfig, musicPlayerConfig } from "@/config/musicConfig";
+import { musicPlayerConfig } from "@/config/musicConfig";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import { url } from "@/utils/url-utils";
@@ -54,19 +54,10 @@ const managerConfigStr = JSON.stringify({
 		noCover: i18n(I18nKey.musicNoCover),
 	},
 });
-
-// 视图配置（序列化后 ~26KB）只在单例组件里注入一次，供所有 MusicPlayer 实例共享，
-// 避免在侧栏/导航栏的多个实例里重复注入（实测首页会渲染 3 个实例，重复约 52KB）。
-const viewConfigStr = JSON.stringify(getMusicViewConfig());
 ---
 
-<script is:inline data-swup-ignore-script define:vars={{ managerConfigStr, viewConfigStr }}>
+<script is:inline data-swup-ignore-script define:vars={{ managerConfigStr }}>
 (function () {
-    // 先挂共享视图配置：本脚本标了 data-swup-ignore-script、且在文档顺序上位于各
-    // MusicPlayer 之前，所以只需在这里赋值一次，各实例直接读取即可。
-    // 刻意放在 singleton guard 之前，确保任何情况下该值都已就位。
-    window.__fireflyMusicView = JSON.parse(viewConfigStr);
-
     // Singleton guard – only create once
     if (window.__fireflyMusic) return;
 

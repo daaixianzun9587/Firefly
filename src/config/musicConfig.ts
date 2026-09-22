@@ -1,5 +1,3 @@
-import I18nKey from "../i18n/i18nKey";
-import { i18n } from "../i18n/translation";
 import type { MusicPlayerConfig } from "../types/config";
 
 // 音乐播放器配置
@@ -63,30 +61,3 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 		],
 	},
 };
-
-/**
- * 播放器「视图配置」——所有 MusicPlayer 实例用的都是同一份（内容完全由
- * musicConfig + 当前语言决定，与实例无关；实例之间只有 widgetId 不同）。
- *
- * 之所以抽到这里：MusicPlayer 在首页会被渲染多次（侧栏 + 导航栏），
- * 而这份配置序列化后有 ~26KB —— 逐实例注入会白占约 52KB 的内联脚本体积。
- * 现在由单例组件 MusicManager 注入并挂到 window.__fireflyMusicView 上共享。
- */
-export function getMusicViewConfig(): Record<string, unknown> {
-	return {
-		showLyrics: musicPlayerConfig.showLyrics ?? true,
-		i18n: {
-			noPlaying: i18n(I18nKey.musicNoPlaying),
-			lyrics: i18n(I18nKey.musicLyrics),
-			noLyrics: i18n(I18nKey.musicNoLyrics),
-			loadingLyrics: i18n(I18nKey.musicLoadingLyrics),
-			failedLyrics: i18n(I18nKey.musicFailedLyrics),
-			noSongs: i18n(I18nKey.musicNoSongs),
-			error: i18n(I18nKey.musicError),
-			play: i18n(I18nKey.musicPlay),
-			pause: i18n(I18nKey.musicPause),
-			noCover: i18n(I18nKey.musicNoCover),
-			music: i18n(I18nKey.music),
-		},
-	};
-}

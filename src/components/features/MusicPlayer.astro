@@ -13,9 +13,23 @@ const { class: className, style, id } = Astro.props;
 
 const config = musicPlayerConfig;
 
-// 视图配置不在这里注入：多个实例（侧栏 + 导航栏）用的内容完全一致，只有 widgetId 不同，
-// 逐实例注入会重复约 52KB（序列化后 ~26KB × 2 份冗余）。
-// 现由单例 MusicManager 注入一次并挂到 window.__fireflyMusicView，各实例直接读取。
+const viewConfigStr = JSON.stringify({
+	showLyrics: config.showLyrics ?? true,
+	i18n: {
+		noPlaying: i18n(I18nKey.musicNoPlaying),
+		lyrics: i18n(I18nKey.musicLyrics),
+		noLyrics: i18n(I18nKey.musicNoLyrics),
+		loadingLyrics: i18n(I18nKey.musicLoadingLyrics),
+		failedLyrics: i18n(I18nKey.musicFailedLyrics),
+		noSongs: i18n(I18nKey.musicNoSongs),
+		error: i18n(I18nKey.musicError),
+		play: i18n(I18nKey.musicPlay),
+		pause: i18n(I18nKey.musicPause),
+		noCover: i18n(I18nKey.musicNoCover),
+		music: i18n(I18nKey.music),
+	},
+});
+
 const widgetId =
 	id || `music-widget-${Math.random().toString(36).substring(2, 9)}`;
 ---
@@ -167,14 +181,14 @@ const widgetId =
 </div>
 </template>
 
-<script define:vars={{ widgetId }} is:inline>
+<script define:vars={{ viewConfigStr, widgetId }} is:inline>
 (function () {
-    // 视图配置由单例 MusicManager 注入一次并挂在 window 上共享
-    // （多个实例的内容完全相同，逐实例注入会重复约 52KB）。
-    // 两者都是文档顺序中的经典内联脚本且 Manager 在前，因此这里必定已就绪。
-    var cfg = window.__fireflyMusicView;
-    if (!cfg) {
-        console.warn("[music] 未取到共享视图配置（MusicManager 未执行？），已跳过本实例：");
+    // 视图配置来自 define:vars 注入的 JSON 字符串；解析失败时优雅退出。
+    var cfg;
+    try {
+        cfg = JSON.parse(viewConfigStr);
+    } catch (e) {
+        console.warn("[music] 播放器视图配置解析失败，已跳过：", e);
         return;
     }
     var widget = document.getElementById(widgetId);
