@@ -25,8 +25,10 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// Meting API 配置
 	meting: {
 		// Meting API 地址
-		// 默认使用官方 API，也可以使用自定义 API
-		api: "https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r",
+		// 2026-09-22 实测：原首位 api.i-meto.com 已失效——TCP 可连通但 25 秒以上不返回数据，
+		// 会让播放器长时间转圈（现已有超时保护兜底）。故把实测可用、0.2s 返回的接口提到首位，
+		// 失效的那个降为备用。如需还原，把下面两行对调即可。
+		api: "https://api.injahow.cn/meting/?server=:server&type=:type&id=:id",
 		// 音乐平台：netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
 		server: "netease",
 		// 类型：song=单曲, playlist=歌单, album=专辑, search=搜索, artist=艺术家
@@ -37,8 +39,8 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 		auth: "",
 		// 备用 API 配置（当主 API 失败时使用）
 		fallbackApis: [
-			"https://api.injahow.cn/meting/?server=:server&type=:type&id=:id",
 			"https://api.moeyao.cn/meting/?server=:server&type=:type&id=:id",
+			"https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r",
 		],
 	},
 
