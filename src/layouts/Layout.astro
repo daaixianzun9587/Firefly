@@ -601,13 +601,15 @@ const siteLang = lang.replace("_", "-");
 
 
 
-    <!-- Sakura Effect。
-         注意：这里刻意「不」按 sakuraConfig.enable 门控 —— 该组件支持**运行时开关**：
-         SakuraEffect.astro 会读 localStorage.sakuraEnabled、并监听 sakuraToggle 事件；
-         且 sakuraConfig.switchable 为 true 时，显示设置面板里会展示该开关（实测确认）。
-         若在此处按 enable 门控，用户在设置里打开樱花将完全无效。
-         也就是说：它的内联脚本（约 9KB）虽然当前 enable:false 仍会输出，但并非"死重量"，
-         它是运行时开关的实现载体。只有在把 switchable 也设为 false 时才可以考虑移除。 -->
+    {/* Sakura Effect。
+        注意：这里刻意「不」按 sakuraConfig.enable 门控 —— 该组件支持**运行时开关**：
+        SakuraEffect.astro 会读 localStorage.sakuraEnabled、并监听 sakuraToggle 事件；
+        且 sakuraConfig.switchable 为 true 时，显示设置面板里会展示该开关（实测确认）。
+        若在此处按 enable 门控，用户在设置里打开樱花将完全无效。
+        它的内联脚本（约 9KB）当前虽在 enable:false 下仍会输出，但并非"死重量"——
+        它是运行时开关的实现载体；只有把 switchable 也设为 false 时才可考虑移除。
+        本注释特意用 Astro 的表达式注释语法：它会在构建时被剥掉，
+        而 HTML 风格注释会原样输出到页面（实测：曾因此让产物多出约 0.3KB）。 */}
     <SakuraEffect />
 
     <!-- Fancybox Manager -->
