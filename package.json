@@ -8,6 +8,7 @@
     "check": "astro check",
     "build": "node scripts/generate-icons.js && pnpm exec tsx scripts/generate-lqips.ts && astro build && pagefind --site dist",
     "build:fast": "node scripts/generate-icons.js && pnpm exec tsx scripts/generate-lqips.ts && astro build",
+    "build:timed": "node scripts/build-timed.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
@@ -73,7 +74,7 @@
     "svelte": "^5.55.9",
     "typescript": "^5.9.2",
     "unist-util-visit": "^5.1.0",
-    "wrangler": "^4.95.0"
+    "wrangler": "4.96.0"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.9",
