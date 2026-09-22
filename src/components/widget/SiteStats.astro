@@ -172,8 +172,8 @@ const stats = [
   // 页面加载时更新
   updateDynamicStats();
 
-  // 页面切换时重新更新
-  document.addEventListener("swup:contentReplaced", () => {
-    setTimeout(updateDynamicStats, 100);
-  });
+  // 注：这里原有一个 swup:contentReplaced 监听用于"页面切换时重新更新"，
+  // 但 swup v4 不再派发该旧版事件名，它永不触发。
+  // 本脚本未标 data-swup-ignore-script，会被 SwupScriptsPlugin 在每次导航后重新执行，
+  // 届时上面的 updateDynamicStats() 会再次运行 —— 导航后的刷新由该机制完成，故移除死监听。
 </script>
