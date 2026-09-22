@@ -137,6 +137,29 @@ const managerConfigStr = JSON.stringify({
     }
 
     // ── Meting fetch ─────────────────────────────────────────
+    // 第三方 Meting 接口最常见的失败模式不是报错，而是"TCP 连得上但不返回数据"。
+    // 此时 await fetch() 会永久挂起：备用 API 轮不到、fm:init 永不触发，
+    // 表现为播放器一直转圈且无法播放。所以每次请求都必须自带超时。
+    var API_TIMEOUT_MS = 8000;
+
+    function fetchJsonWithTimeout(url, ms) {
+        // 极老的环境没有 AbortController，退化为普通请求（保持原有行为）
+        if (typeof AbortController === 'undefined') {
+            return fetch(url).then(function (r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            });
+        }
+        var controller = new AbortController();
+        var timer = setTimeout(function () { controller.abort(); }, ms);
+        return fetch(url, { signal: controller.signal })
+            .then(function (r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .finally(function () { clearTimeout(timer); });
+    }
+
     async function fetchMetingData() {
         if (!config.meting) return;
         var m = config.meting;
@@ -153,9 +176,7 @@ const managerConfigStr = JSON.stringify({
                     .replace(':r', Math.random());
                 if (m.auth) fetchUrl += '&auth=' + m.auth;
 
-                var res = await fetch(fetchUrl);
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                var data = await res.json();
+                var data = await fetchJsonWithTimeout(fetchUrl, API_TIMEOUT_MS);
 
                 if (Array.isArray(data) && data.length > 0) {
                     state.playlist = data.map(function (item) {
