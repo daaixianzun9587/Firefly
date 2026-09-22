@@ -167,16 +167,18 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
   }
 
   // 页面切换时重新初始化。
-  // 原先还注册了 "swup:contentReplaced"，但 swup v4 只派发 swup:<hook 名>（冒号式），
-  // 从不派发旧版驼峰事件，该注册永不触发，故移除。
-  document.addEventListener("swup:content:replace", runInitWithDelay);
+  // 说明：swup v4 对每个 hook 会同时触发 hook 回调与 `swup:<hook 名>` DOM 事件。
+  // 原先这里同时注册了 4 条（content:replace / page:view × 「DOM 事件」与「hooks」各一套），
+  // 一次导航会把打字机销毁重建 4 次，而 runInitWithDelay 每遍还会再排一次 220ms 的补跑 ——
+  // 结果是文字反复重头播放、难以正常播完。
+  //
+  // 现只保留 page:view 的 DOM 事件：
+  //   · 选 page:view 而非 content:replace —— 它是整个 swup 访问流程结束的时点，DOM 已就位；
+  //     且 runInitWithDelay 内 220ms 的补跑已覆盖"banner 显隐晚于内容替换"的场景。
+  //   · 选 DOM 事件而非 hooks —— @swup/astro 用 onIdleAfterLoad 初始化 swup，
+  //     本脚本执行时 window.swup 往往还不存在，原先的 hooks 注册会被 if 跳过而失效；
+  //     而 document.addEventListener 是无条件注册的，swup 又在 document 上派发，必定收到。
   document.addEventListener("swup:page:view", runInitWithDelay);
-
-  // swup hooks（若可用）
-  if (typeof window !== "undefined" && window.swup?.hooks) {
-    window.swup.hooks.on("content:replace", runInitWithDelay);
-    window.swup.hooks.on("page:view", runInitWithDelay);
-  }
 </script>
 
 <style>
