@@ -16,19 +16,10 @@ export const siteConfig: SiteConfig = {
 	site_url: "https://daaixianzun999.dpdns.org",
 
 	// 站点描述
-	description:
-		"我的第一个博客，欢迎大家访问",
+	description: "我的第一个博客，欢迎大家访问",
 
 	// 站点关键词
-	keywords: [
-		"daxz",
-		"Fuwari",
-		"Astro",
-		"ACGN",
-		"博客",
-		"技术博客",
-		"静态博客",
-	],
+	keywords: ["daxz", "Fuwari", "Astro", "ACGN", "博客", "技术博客", "静态博客"],
 
 	// 主题色
 	themeColor: {
