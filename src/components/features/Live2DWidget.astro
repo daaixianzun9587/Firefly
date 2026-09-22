@@ -136,7 +136,16 @@ function serializeMenus(menus: Props["config"]["menus"]) {
 		github: () => window.open("https://github.com/CuteLeaf/Firefly", "_blank"),
 		switchModel: (widget) => {
 			const container = document.getElementById("l2d-widget-container");
-			const models = JSON.parse(container?.dataset.models || "[]");
+			// 解析失败或模型列表为空时直接返回：
+			// 否则 models.length 为 0 会让 currentModelIndex 变成 NaN
+			let models: unknown[] = [];
+			try {
+				models = JSON.parse(container?.dataset.models || "[]");
+			} catch (e) {
+				console.warn("[live2d] 模型列表解析失败，已跳过切换：", e);
+				return;
+			}
+			if (!Array.isArray(models) || models.length === 0) return;
 			currentModelIndex = (currentModelIndex + 1) % models.length;
 			widget.switchModel(currentModelIndex);
 		},
@@ -243,7 +252,15 @@ function serializeMenus(menus: Props["config"]["menus"]) {
 		const container = document.getElementById("l2d-widget-container");
 		if (!container) return;
 
-		const responsive = JSON.parse(container.dataset.responsive || "{}");
+		// 本函数挂在 window.resize 上，解析失败必须优雅退出，
+		// 否则每次窗口缩放都会抛错
+		let responsive: any = {};
+		try {
+			responsive = JSON.parse(container.dataset.responsive || "{}");
+		} catch (e) {
+			console.warn("[live2d] 响应式配置解析失败，已跳过：", e);
+			return;
+		}
 		if (responsive.hideOnMobile) {
 			const breakpoint = responsive.mobileBreakpoint || 768;
 			if (window.innerWidth <= breakpoint) {

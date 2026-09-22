@@ -109,7 +109,14 @@ function renderRandomPosts() {
 
   var apiUrl = container.dataset.apiUrl;
   var currentId = container.dataset.currentId;
-  var relatedIds = JSON.parse(container.dataset.relatedIds || '[]');
+  // data-related-ids 由服务端序列化；万一格式异常也不能让整个随机文章模块失效
+  var relatedIds;
+  try {
+    relatedIds = JSON.parse(container.dataset.relatedIds || '[]');
+  } catch (e) {
+    relatedIds = [];
+  }
+  if (!Array.isArray(relatedIds)) relatedIds = [];
   var excludeSet = {};
   excludeSet[currentId] = true;
   for (var i = 0; i < relatedIds.length; i++) excludeSet[relatedIds[i]] = true;
@@ -207,10 +214,20 @@ function renderRandomPosts() {
     render(window.__allPostMetaCache);
   } else {
     fetch(apiUrl)
-      .then(function(r) { return r.json(); })
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
       .then(function(data) {
-        window.__allPostMetaCache = data;
-        render(data);
+        // 接口返回非数组时按空数据处理，避免下游 filter 抛错
+        var list = Array.isArray(data) ? data : [];
+        window.__allPostMetaCache = list;
+        render(list);
+      })
+      .catch(function(err) {
+        // 请求失败时退回既有空状态模板，避免这里永久空白且无任何提示
+        console.warn('[random-posts] 获取文章元数据失败，已显示空状态：', err);
+        render([]);
       });
   }
 }

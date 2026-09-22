@@ -61,7 +61,15 @@ const managerConfigStr = JSON.stringify({
     // Singleton guard – only create once
     if (window.__fireflyMusic) return;
 
-    var config = JSON.parse(managerConfigStr);
+    // 配置来自 define:vars 注入的 JSON 字符串；解析失败时优雅退出，
+    // 不能让一个解析异常把整个音乐模块的初始化带崩。
+    var config;
+    try {
+        config = JSON.parse(managerConfigStr);
+    } catch (e) {
+        console.warn("[music] 播放器配置解析失败，已跳过初始化：", e);
+        return;
+    }
 
     // ── Helpers ──────────────────────────────────────────────
     function formatTime(seconds) {

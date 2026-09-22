@@ -183,7 +183,14 @@ const widgetId =
 
 <script define:vars={{ viewConfigStr, widgetId }} is:inline>
 (function () {
-    var cfg = JSON.parse(viewConfigStr);
+    // 视图配置来自 define:vars 注入的 JSON 字符串；解析失败时优雅退出。
+    var cfg;
+    try {
+        cfg = JSON.parse(viewConfigStr);
+    } catch (e) {
+        console.warn("[music] 播放器视图配置解析失败，已跳过：", e);
+        return;
+    }
     var widget = document.getElementById(widgetId);
     if (!widget) return;
 
