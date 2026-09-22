@@ -1,5 +1,12 @@
 /* ===== 基础变量定义 ===== */
 :root
+  /*
+   * --hue 的主题真值由 Layout.astro 的内联脚本在运行时注入（用户可在「显示设置」里调整）。
+   * 这里给出与 siteConfig.themeColor.hue 一致的静态兜底值：
+   * 当 JS 被禁用、或该内联脚本因异常（如隐私模式下 localStorage 抛 SecurityError）未能执行时，
+   * 本文件中的 78 处 var(--hue) 引用仍然有效，全站配色不会失效。
+   */
+  --hue: 165
   --radius-large: 1rem
   --content-delay: 150ms
 

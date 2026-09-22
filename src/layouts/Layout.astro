@@ -260,8 +260,21 @@ const siteLang = lang.replace("_", "-");
       const DARK_MODE = "dark";
       const SYSTEM_MODE = "system";
 
+      // 安全读取 localStorage。
+      // 浏览器禁用站点存储 / 隐私模式下，访问 localStorage 会抛 SecurityError；
+      // 本脚本是 is:inline 内联脚本（必须在首屏渲染前同步执行），无法 import 工具模块，
+      // 因此自带一个带 try/catch 的读取器——任何情况下都不能让异常中断主题初始化，
+      // 否则 --hue 不会被注入，全站配色会失效（兜底值见 src/styles/variables.styl）。
+      function readStore(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return null;
+        }
+      }
+
       // 获取存储的主题，如果没有则使用默认值
-      const theme = localStorage.getItem("theme") || defaultMode;
+      const theme = readStore("theme") || defaultMode;
 
       // 获取系统主题
       function getSystemTheme() {
@@ -295,11 +308,11 @@ const siteLang = lang.replace("_", "-");
       );
 
       // Load the hue from local storage
-      const hue = localStorage.getItem("hue") || configHue;
+      const hue = readStore("hue") || configHue;
       document.documentElement.style.setProperty("--hue", hue);
 
       // 设置卡片透明度（全屏透明模式下使用），优先使用用户自定义值
-      const storedCardOpacity = localStorage.getItem("overlayCardOpacity");
+      const storedCardOpacity = readStore("overlayCardOpacity");
       const parsedCardOpacity = storedCardOpacity === null ? NaN : Number.parseFloat(storedCardOpacity);
       const resolvedCardOpacity = Number.isFinite(parsedCardOpacity)
         ? Math.min(1, Math.max(0, parsedCardOpacity))
@@ -348,7 +361,7 @@ const siteLang = lang.replace("_", "-");
       const WALLPAPER_OVERLAY = "overlay";
       const WALLPAPER_NONE = "none";
       const wallpaperMode = isWallpaperSwitchable
-        ? localStorage.getItem("wallpaperMode") || defaultWallpaperMode
+        ? readStore("wallpaperMode") || defaultWallpaperMode
         : defaultWallpaperMode;
 
       // 设置data-wallpaper-mode属性
@@ -516,7 +529,7 @@ const siteLang = lang.replace("_", "-");
 
       // 初始化水波纹动画状态 - 在 html 元素上设置属性，CSS 会立即生效
       (function applyWavesEnabled() {
-        const wavesEnabled = localStorage.getItem("wavesEnabled");
+        const wavesEnabled = readStore("wavesEnabled");
         if (wavesEnabled !== null) {
           document.documentElement.setAttribute("data-waves-enabled", wavesEnabled);
         }
@@ -524,7 +537,7 @@ const siteLang = lang.replace("_", "-");
 
       // 初始化渐变过渡状态 - 在 html 元素上设置属性，CSS 会立即生效
       (function applyGradientEnabled() {
-        const gradientEnabled = localStorage.getItem("gradientEnabled");
+        const gradientEnabled = readStore("gradientEnabled");
         if (gradientEnabled !== null) {
           document.documentElement.setAttribute("data-gradient-enabled", gradientEnabled);
         }
@@ -532,7 +545,7 @@ const siteLang = lang.replace("_", "-");
 
       // 初始化横幅标题显示状态 - 在 html 元素上设置属性，CSS 会立即生效
       (function applyBannerTitleEnabled() {
-        const bannerTitleEnabled = localStorage.getItem("bannerTitleEnabled");
+        const bannerTitleEnabled = readStore("bannerTitleEnabled");
         if (bannerTitleEnabled !== null) {
           document.documentElement.setAttribute("data-banner-title-enabled", bannerTitleEnabled);
         }
@@ -1293,7 +1306,14 @@ function disableAnimation() {
       }
 
       // 同步主题状态 - 解决从首页进入文章页面时代码块渲染问题
-      const storedTheme = localStorage.getItem("theme") || siteConfig.themeColor.defaultMode || "light";
+      // 注意：本脚本与上方内联脚本作用域不同，readStore 不可用，故在此自带 try/catch——
+      // 存储不可用时退回默认主题，不能让异常中断后续逻辑。
+      let storedTheme = siteConfig.themeColor.defaultMode || "light";
+      try {
+        storedTheme = localStorage.getItem("theme") || storedTheme;
+      } catch (e) {
+        // 隐私模式 / 禁用站点存储：沿用默认主题
+      }
       let isDark = false;
       
       // 处理 system 模式
