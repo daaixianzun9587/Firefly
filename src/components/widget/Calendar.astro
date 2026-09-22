@@ -577,8 +577,13 @@ const postUrlPrefix = url("/posts/");
   // 页面加载时渲染日历
   initCalendar();
 
-  // 页面切换时重新渲染
-  document.addEventListener("swup:contentReplaced", () => {
+  // 页面切换时重新渲染。
+  // 注意：swup v4 不再派发旧版 swup:contentReplaced 事件（它只派发 swup:<hook 名>，以及
+  // @swup/astro 转发的 astro:page-load）。而本组件的脚本标了 data-swup-ignore-script，
+  // 不会被 SwupScriptsPlugin 重新执行 —— 原先两条路都不通，导致切换页面后日历不刷新。
+  // 改用 astro:page-load：它只在 swup 导航后触发（初始加载不触发），因此不会与上面的
+  // initCalendar() 重复执行。
+  document.addEventListener("astro:page-load", () => {
     setTimeout(initCalendar, 100);
   });
 </script>
