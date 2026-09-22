@@ -181,19 +181,15 @@ const widgetId =
 </div>
 </template>
 
-<script define:vars={{ viewConfigStr, widgetId }} is:inline>
-(function () {
-    // 视图配置来自 define:vars 注入的 JSON 字符串；解析失败时优雅退出。
-    var cfg;
-    try {
-        cfg = JSON.parse(viewConfigStr);
-    } catch (e) {
-        console.warn("[music] 播放器视图配置解析失败，已跳过：", e);
-        return;
-    }
-    var widget = document.getElementById(widgetId);
-    if (!widget) return;
+<script>
+import { getMusicViewConfig } from "@/config/musicConfig";
 
+// 视图配置在构建期静态导入：多个实例共用同一份，且只会进 bundle 一次。
+// （原先是 define:vars 逐实例注入 —— 而 define:vars 会强制 is:inline，
+//   导致这段约 25.9KB 的播放器代码在页面里重复内联 3 份，合计约 77KB。）
+const cfg = getMusicViewConfig();
+
+function wireMusicPlayer(widget) {
     var mgr = window.__fireflyMusic;
     if (!mgr) return;
 
@@ -231,7 +227,7 @@ const widgetId =
         btnDrawer: widget.querySelector('.btn-drawer-toggle'),
         playlistDrawer: widget.querySelector('.playlist-drawer'),
         playlistContainer: widget.querySelector('.playlist-container'),
-        itemTemplate: document.getElementById('playlist-item-template-' + widgetId)
+        itemTemplate: document.getElementById('playlist-item-template-' + widget.id)
     };
 
     // Verify critical elements
@@ -822,7 +818,20 @@ const widgetId =
         setLoading(true);
         mgr.init();
     }
-})();
+}
+
+function wireAllMusicPlayers() {
+    document.querySelectorAll('.music-player-widget').forEach(function (el) {
+        wireMusicPlayer(el);
+    });
+}
+
+// 初始接线
+wireAllMusicPlayers();
+// 本脚本已由 is:inline 改为打包模块：swup 导航后**模块体不会重新执行**（ESM 缓存），
+// 所以必须自己在新 DOM 就位后重新接线 —— 否则切页后播放器会失效（元素是新的、旧引用已失效）。
+// astro:page-load 由 @swup/astro 在导航完成后派发，初始加载不触发，正好不重复。
+document.addEventListener('astro:page-load', wireAllMusicPlayers);
 </script>
 
 <style>
