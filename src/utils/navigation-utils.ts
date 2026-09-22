@@ -98,23 +98,27 @@ export function waitForSwup(timeout = 5000): Promise<boolean> {
 		}
 
 		let timeoutId: NodeJS.Timeout;
+		let intervalId: NodeJS.Timeout;
 
+		// 注：swup v4 不再派发 swup:enable（改为 hooks 与 astro:page-load），
+		// 原先靠该事件通知"已就绪"的写法永远不触发 —— 结果只能等满超时并返回 false，
+		// 即使 swup 在几十毫秒后就绪也一样。改为轮询 isSwupReady()：一旦就绪立即 resolve。
 		const checkSwup = () => {
 			if (isSwupReady()) {
 				clearTimeout(timeoutId);
-				document.removeEventListener("swup:enable", checkSwup);
+				clearInterval(intervalId);
 				resolve(true);
 			}
 		};
 
-		// 监听 Swup 启用事件
-		document.addEventListener("swup:enable", checkSwup);
-
 		// 设置超时
 		timeoutId = setTimeout(() => {
-			document.removeEventListener("swup:enable", checkSwup);
+			clearInterval(intervalId);
 			resolve(false);
 		}, timeout);
+
+		intervalId = setInterval(checkSwup, 50);
+		checkSwup();
 	});
 }
 
