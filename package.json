@@ -73,7 +73,7 @@
     "svelte": "^5.55.9",
     "typescript": "^5.9.2",
     "unist-util-visit": "^5.1.0",
-    "wrangler": "^4.95.0"
+    "wrangler": "4.96.0"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.9",
