@@ -166,8 +166,9 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
     runInitWithDelay();
   }
 
-  // 支持页面切换时重新初始化（兼容不同 swup 事件名）
-  document.addEventListener("swup:contentReplaced", runInitWithDelay);
+  // 页面切换时重新初始化。
+  // 原先还注册了 "swup:contentReplaced"，但 swup v4 只派发 swup:<hook 名>（冒号式），
+  // 从不派发旧版驼峰事件，该注册永不触发，故移除。
   document.addEventListener("swup:content:replace", runInitWithDelay);
   document.addEventListener("swup:page:view", runInitWithDelay);
 

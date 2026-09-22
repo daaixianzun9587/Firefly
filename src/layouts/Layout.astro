@@ -1386,10 +1386,11 @@ function disableAnimation() {
 
 
   };
+  // 注：这里原先还有一个 `else { document.addEventListener("swup:enable", setup) }`
+  // 回退分支。但 swup v4 不再派发 swup:enable（改为 hooks 与 astro:page-load），该分支永不触发，
+  // 属"看似有兜底、实则没有"，故移除以免误导。
   if (window?.swup?.hooks) {
     setup();
-  } else {
-    document.addEventListener("swup:enable", setup);
   }
 
   document.addEventListener("astro:page-load", scheduleContentOverflowEnhancements);
