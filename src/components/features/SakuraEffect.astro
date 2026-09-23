@@ -344,10 +344,16 @@ const config = sakuraConfig;
 			}
 			
 			// 初始化樱花特效的函数
+// localStorage 在隐私模式 / 配额超限 / 禁用站点数据时**会抛异常**（不是返回 null）。
+	// 本脚本是 is:inline（不参与打包），无法 import src/utils/storage-utils.ts，
+	// 因此就地做同策略的安全封装。
+	function __sfStoreGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+	function __sfStoreSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
 			const setupSakura = () => {
 				if (window.sakuraInitialized) return;
 				// 检查用户是否在设置中关闭了樱花特效
-				var storedEnabled = localStorage.getItem("sakuraEnabled");
+				var storedEnabled = __sfStoreGet("sakuraEnabled");
 				var isEnabled = storedEnabled !== null ? storedEnabled === "true" : sakuraConfig.enable;
 				// 创建管理器并根据用户偏好决定是否启动
 				var cfg = Object.assign({}, sakuraConfig, { enable: isEnabled });

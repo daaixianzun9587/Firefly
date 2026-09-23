@@ -465,9 +465,15 @@ const bannerCarouselInterval = Math.max(
             var defaultEnabled = container.dataset.carouselEnabled === 'true';
             var FADE_MS = 1500;
 
+// localStorage 在隐私模式 / 配额超限 / 禁用站点数据时**会抛异常**（不是返回 null）。
+                // 本脚本是 is:inline（不参与打包），无法 import src/utils/storage-utils.ts，
+                // 因此就地做同策略的安全封装。
+                function __sfStoreGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+                function __sfStoreSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
             function isCarouselEnabled() {
                 if (!switchable) return defaultEnabled;
-                var stored = localStorage.getItem('bannerCarouselEnabled');
+                var stored = __sfStoreGet('bannerCarouselEnabled');
                 if (stored === null) return defaultEnabled;
                 return stored === 'true';
             }

@@ -60,7 +60,13 @@ const initialLayoutClass =
 <!-- 立即执行脚本：防止刷新时的布局闪烁 -->
 <script is:inline define:vars={{ defaultLayout, mobileDefaultLayout, columnWidth }}>
   (function() {
-    const savedLayout = localStorage.getItem('postListLayout');
+// localStorage 在隐私模式 / 配额超限 / 禁用站点数据时**会抛异常**（不是返回 null）。
+  // 本脚本是 is:inline（不参与打包），无法 import src/utils/storage-utils.ts，
+  // 因此就地做同策略的安全封装。
+  function __sfStoreGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function __sfStoreSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+    const savedLayout = __sfStoreGet('postListLayout');
     // 根据视口宽度确定有效的默认布局
     const effectiveDefault = window.innerWidth < 780 ? mobileDefaultLayout : defaultLayout;
     // 低于380px强制网格模式
