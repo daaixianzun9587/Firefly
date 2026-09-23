@@ -37,3 +37,10 @@ Firefly-docs/
 cache/
 package/
 .obsidian/
+
+# 本地工作文档与会话记忆（不上仓库）
+/完善计划.md
+/日志.md
+/执行清单.md
+/操作指南.md
+/.workbuddy/
