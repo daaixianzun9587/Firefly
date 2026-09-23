@@ -470,8 +470,14 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
 }
 
 /* 移动端暗色模式优化 */
-@media (max-width: 1023px) and (prefers-color-scheme: dark) {
-    .banner-home-text-overlay {
+/* 注：原先条件是 (max-width: 1023px) and (prefers-color-scheme: dark) —— 那响应的是
+   **操作系统**配色，而本站主题由自己管理（documentElement 上的 .dark 类，
+   见 utils/setting-utils.ts）。两者不一致会造成：
+     · 系统浅色 + 站点手动切深色 → 这段暗色优化**不生效**，banner 标题在深色背景上偏难读；
+     · 系统深色 + 站点手动切浅色 → 又多余生效（渐变与阴影过重）。
+   故改为跟随站点主题的 :root.dark（与项目其余 20 处暗色覆盖写法一致）。 */
+@media (max-width: 1023px) {
+    :root.dark .banner-home-text-overlay {
         background: linear-gradient(
             to top,
             rgba(0, 0, 0, 0.8) 0%,
@@ -480,11 +486,11 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
         );
     }
 
-    .banner-title {
+    :root.dark .banner-title {
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
     }
 
-    .banner-subtitle {
+    :root.dark .banner-subtitle {
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     }
 }

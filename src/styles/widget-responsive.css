@@ -357,7 +357,12 @@
 }
 
 /* 暗色主题适配 */
-@media (prefers-color-scheme: dark) {
+/* 注：原先用 (prefers-color-scheme: dark)，跟随的是**操作系统**配色，
+   与本站「documentElement 上的 .dark 类」这套主题机制不一致
+   （项目其余暗色覆盖共 20 处都用 :root.dark）。此处一并对齐。
+   另：本区块涉及的 .widget-error / .widget-empty / .widget-loading 三个类
+   目前在项目里**无任何组件引用**（实测 0 处），故本次改动不影响当前渲染。 */
+:root.dark {
   .widget-container:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
