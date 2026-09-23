@@ -31,10 +31,10 @@ const className = Astro.props.class;
     class={"pb-4 card-base " + className}
     style={style}
 >
+    {/* 小部件标题用 h2（原先是无语义的 div）：补齐页面缺失的二级标题层级——
+        此前首页从 h1 直接跳到 h3，h2 数量为 0。视觉零差异：Tailwind preflight
+        已归零 h2 的默认 margin 与字号字重，实际样式全部来自下面的 class。 */}
     {name && (
-        {/* 标题用 h2：补上页面缺失的二级标题层级（此前首页为 h1 → h3 跳跃，<h2> 数量为 0）。
-            视觉与原 div 完全一致 —— Tailwind preflight 已把 h2 的默认 margin /
-            font-size / font-weight 归零，实际样式全部来自这些 class。 */}
         <h2 class="widget-title font-bold transition text-lg text-neutral-900 dark:text-neutral-100 relative ml-8 mt-4 mb-2
             before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
             before:absolute before:left-[-16px] before:top-[5.5px] flex items-center justify-between">
