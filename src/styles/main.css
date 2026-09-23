@@ -423,6 +423,22 @@ html {
         @apply outline-hidden;
     }
 
+    /* 键盘焦点可见：统一使用主题色。
+       只在**键盘导航**时出现（鼠标点击不触发 :focus-visible），
+       所以不影响鼠标用户的观感，只补齐此前缺失的键盘可达性反馈
+       —— 改动前全项目 0 处 :focus-visible。 */
+    a:focus-visible,
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    summary:focus-visible,
+    [tabindex]:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+    }
+
     .meta-icon {
         @apply w-8 h-8 transition-colors duration-150 rounded-md flex items-center justify-center bg-(--btn-regular-bg)
         text-(--btn-content) mr-2
