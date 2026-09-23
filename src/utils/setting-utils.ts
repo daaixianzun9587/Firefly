@@ -11,6 +11,11 @@ import {
 } from "@constants/constants";
 import type { LIGHT_DARK_MODE, WALLPAPER_MODE } from "@/types/config";
 import {
+	getStorageItem,
+	removeStorageItem,
+	setStorageItem,
+} from "@/utils/storage-utils";
+import {
 	backgroundWallpaper,
 	expressiveCodeConfig,
 	sakuraConfig,
@@ -65,7 +70,7 @@ export function getHue(): number {
 	if (typeof window === "undefined" || !window.localStorage) {
 		return getDefaultHue();
 	}
-	const stored = localStorage.getItem("hue");
+	const stored = getStorageItem("hue");
 	return stored ? Number.parseInt(stored, 10) : getDefaultHue();
 }
 
@@ -78,7 +83,7 @@ export function setHue(hue: number): void {
 	) {
 		return;
 	}
-	localStorage.setItem("hue", String(hue));
+	setStorageItem("hue", String(hue));
 	const r = document.querySelector(":root") as HTMLElement;
 	if (!r) {
 		return;
@@ -165,7 +170,7 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 	applyThemeToDocument(theme);
 
 	// 保存到localStorage
-	localStorage.setItem("theme", theme);
+	setStorageItem("theme", theme);
 
 	// 如果切换到 system 模式，需要监听系统主题变化
 	if (theme === SYSTEM_MODE) {
@@ -254,9 +259,7 @@ export function getStoredTheme(): LIGHT_DARK_MODE {
 	) {
 		return getDefaultTheme();
 	}
-	return (
-		(localStorage.getItem("theme") as LIGHT_DARK_MODE) || getDefaultTheme()
-	);
+	return (getStorageItem("theme") as LIGHT_DARK_MODE) || getDefaultTheme();
 }
 
 // 初始化主题监听器（用于页面加载后）
@@ -847,7 +850,7 @@ export function setWallpaperMode(mode: WALLPAPER_MODE): void {
 	) {
 		return;
 	}
-	localStorage.setItem("wallpaperMode", mode);
+	setStorageItem("wallpaperMode", mode);
 	applyWallpaperModeToDocument(mode);
 	if (typeof window !== "undefined") {
 		window.dispatchEvent(
@@ -876,12 +879,12 @@ export function getStoredWallpaperMode(): WALLPAPER_MODE {
 
 	const isSwitchable = backgroundWallpaper.switchable ?? true;
 	if (!isSwitchable) {
-		localStorage.removeItem("wallpaperMode");
+		removeStorageItem("wallpaperMode");
 		return backgroundWallpaper.mode;
 	}
 
 	return (
-		(localStorage.getItem("wallpaperMode") as WALLPAPER_MODE) ||
+		(getStorageItem("wallpaperMode") as WALLPAPER_MODE) ||
 		backgroundWallpaper.mode
 	);
 }
@@ -910,7 +913,7 @@ export function getStoredOverlayOpacity(): number {
 	) {
 		return getDefaultOverlayOpacity();
 	}
-	const stored = localStorage.getItem("overlayOpacity");
+	const stored = getStorageItem("overlayOpacity");
 	if (stored === null) {
 		return getDefaultOverlayOpacity();
 	}
@@ -928,7 +931,7 @@ export function getStoredOverlayBlur(): number {
 	) {
 		return getDefaultOverlayBlur();
 	}
-	const stored = localStorage.getItem("overlayBlur");
+	const stored = getStorageItem("overlayBlur");
 	if (stored === null) {
 		return getDefaultOverlayBlur();
 	}
@@ -946,7 +949,7 @@ export function getStoredOverlayCardOpacity(): number {
 	) {
 		return getDefaultOverlayCardOpacity();
 	}
-	const stored = localStorage.getItem("overlayCardOpacity");
+	const stored = getStorageItem("overlayCardOpacity");
 	if (stored === null) {
 		return getDefaultOverlayCardOpacity();
 	}
@@ -999,7 +1002,7 @@ export function setOverlayOpacity(opacity: number): void {
 		typeof localStorage !== "undefined" &&
 		typeof localStorage.setItem === "function"
 	) {
-		localStorage.setItem("overlayOpacity", String(safeOpacity));
+		setStorageItem("overlayOpacity", String(safeOpacity));
 	}
 	applyOverlayOpacityToDocument(safeOpacity);
 }
@@ -1010,7 +1013,7 @@ export function setOverlayBlur(blur: number): void {
 		typeof localStorage !== "undefined" &&
 		typeof localStorage.setItem === "function"
 	) {
-		localStorage.setItem("overlayBlur", String(safeBlur));
+		setStorageItem("overlayBlur", String(safeBlur));
 	}
 	applyOverlayBlurToDocument(safeBlur);
 }
@@ -1021,7 +1024,7 @@ export function setOverlayCardOpacity(cardOpacity: number): void {
 		typeof localStorage !== "undefined" &&
 		typeof localStorage.setItem === "function"
 	) {
-		localStorage.setItem("overlayCardOpacity", String(safeCardOpacity));
+		setStorageItem("overlayCardOpacity", String(safeCardOpacity));
 	}
 	applyOverlayCardOpacityToDocument(safeCardOpacity);
 }
@@ -1053,7 +1056,7 @@ export function getStoredWavesEnabled(): boolean {
 	) {
 		return getDefaultWavesEnabled();
 	}
-	const stored = localStorage.getItem("wavesEnabled");
+	const stored = getStorageItem("wavesEnabled");
 	if (stored === null) {
 		return getDefaultWavesEnabled();
 	}
@@ -1067,7 +1070,7 @@ export function setWavesEnabled(enabled: boolean): void {
 	) {
 		return;
 	}
-	localStorage.setItem("wavesEnabled", String(enabled));
+	setStorageItem("wavesEnabled", String(enabled));
 	applyWavesEnabledToDocument(enabled);
 }
 
@@ -1110,7 +1113,7 @@ export function getStoredGradientEnabled(): boolean {
 	) {
 		return getDefaultGradientEnabled();
 	}
-	const stored = localStorage.getItem("gradientEnabled");
+	const stored = getStorageItem("gradientEnabled");
 	if (stored === null) {
 		return getDefaultGradientEnabled();
 	}
@@ -1124,7 +1127,7 @@ export function setGradientEnabled(enabled: boolean): void {
 	) {
 		return;
 	}
-	localStorage.setItem("gradientEnabled", String(enabled));
+	setStorageItem("gradientEnabled", String(enabled));
 	applyGradientEnabledToDocument(enabled);
 }
 
@@ -1157,7 +1160,7 @@ export function getStoredSakuraEnabled(): boolean {
 	if (typeof localStorage === "undefined") {
 		return getDefaultSakuraEnabled();
 	}
-	const stored = localStorage.getItem("sakuraEnabled");
+	const stored = getStorageItem("sakuraEnabled");
 	if (stored === null) {
 		return getDefaultSakuraEnabled();
 	}
@@ -1171,7 +1174,7 @@ export function setSakuraEnabled(enabled: boolean): void {
 	) {
 		return;
 	}
-	localStorage.setItem("sakuraEnabled", String(enabled));
+	setStorageItem("sakuraEnabled", String(enabled));
 	document.documentElement.setAttribute("data-sakura-enabled", String(enabled));
 	// 实时切换樱花特效
 	window.dispatchEvent(
@@ -1195,7 +1198,7 @@ export function getStoredBannerTitleEnabled(): boolean {
 	) {
 		return getDefaultBannerTitleEnabled();
 	}
-	const stored = localStorage.getItem("bannerTitleEnabled");
+	const stored = getStorageItem("bannerTitleEnabled");
 	if (stored === null) {
 		return getDefaultBannerTitleEnabled();
 	}
@@ -1214,7 +1217,7 @@ export function getStoredBannerCarouselEnabled(): boolean {
 	) {
 		return getDefaultBannerCarouselEnabled();
 	}
-	const stored = localStorage.getItem("bannerCarouselEnabled");
+	const stored = getStorageItem("bannerCarouselEnabled");
 	if (stored === null) {
 		return getDefaultBannerCarouselEnabled();
 	}
@@ -1228,7 +1231,7 @@ export function setBannerTitleEnabled(enabled: boolean): void {
 	) {
 		return;
 	}
-	localStorage.setItem("bannerTitleEnabled", String(enabled));
+	setStorageItem("bannerTitleEnabled", String(enabled));
 	applyBannerTitleEnabledToDocument(enabled);
 }
 
@@ -1241,7 +1244,7 @@ export function setBannerCarouselEnabled(enabled: boolean): void {
 		typeof localStorage !== "undefined" &&
 		typeof localStorage.setItem === "function"
 	) {
-		localStorage.setItem("bannerCarouselEnabled", String(safeEnabled));
+		setStorageItem("bannerCarouselEnabled", String(safeEnabled));
 	}
 	applyBannerCarouselEnabledToDocument(safeEnabled);
 	if (typeof window !== "undefined") {
