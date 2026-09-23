@@ -324,4 +324,9 @@ export const zh_CN: Translation = {
 	[Key.passwordError]: "密码错误，请重试。",
 	[Key.passwordProtectedRss]: "本文已加密保护，请访问网站查看。",
 	[Key.scrollDown]: "向下滚动",
+	[Key.fontSize]: "正文字号",
+	[Key.fontSizeSmall]: "小",
+	[Key.fontSizeNormal]: "标准",
+	[Key.fontSizeLarge]: "大",
+	[Key.fontSizeXLarge]: "特大",
 };

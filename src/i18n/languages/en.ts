@@ -335,4 +335,9 @@ export const en: Translation = {
 	[Key.passwordProtectedRss]:
 		"This article is encrypted. Please visit the website to view it.",
 	[Key.scrollDown]: "Scroll down",
+	[Key.fontSize]: "Font Size",
+	[Key.fontSizeSmall]: "Small",
+	[Key.fontSizeNormal]: "Normal",
+	[Key.fontSizeLarge]: "Large",
+	[Key.fontSizeXLarge]: "X-Large",
 };

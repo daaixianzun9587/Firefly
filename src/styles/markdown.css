@@ -3,6 +3,10 @@
 .custom-md {
   overflow-wrap: break-word;
 
+  /* 正文字号（P3-2）：默认 1 = 完全继承父级字号，即**零视觉变化**；
+     由「显示设置」里的字号选项改写 --content-font-scale（写在 <html> 上）。 */
+  font-size: calc(1em * var(--content-font-scale, 1));
+
   body.sticky-navbar & {
     [id] {
       scroll-margin-top: 5.5rem;

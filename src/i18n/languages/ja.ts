@@ -334,4 +334,9 @@ export const ja: Translation = {
 	[Key.passwordProtectedRss]:
 		"この記事は暗号化されています。ウェブサイトにアクセスしてご覧ください。",
 	[Key.scrollDown]: "下へスクロール",
+	[Key.fontSize]: "文字サイズ",
+	[Key.fontSizeSmall]: "小",
+	[Key.fontSizeNormal]: "標準",
+	[Key.fontSizeLarge]: "大",
+	[Key.fontSizeXLarge]: "特大",
 };

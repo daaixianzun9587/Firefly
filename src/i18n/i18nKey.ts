@@ -321,6 +321,11 @@ enum I18nKey {
 	passwordError = "passwordError",
 	passwordProtectedRss = "passwordProtectedRss",
 	scrollDown = "scrollDown",
+	fontSize = "fontSize",
+	fontSizeSmall = "fontSizeSmall",
+	fontSizeNormal = "fontSizeNormal",
+	fontSizeLarge = "fontSizeLarge",
+	fontSizeXLarge = "fontSizeXLarge",
 }
 
 export default I18nKey;

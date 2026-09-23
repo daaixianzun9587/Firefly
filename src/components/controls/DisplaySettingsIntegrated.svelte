@@ -492,6 +492,43 @@ $effect(() => {
 		}
 	}
 });
+
+// 正文字号（P3-2）：只影响文章正文 .custom-md，导航/侧栏/卡片不受影响。
+const FONT_SIZE_STEPS = { small: 0.875, normal: 1, large: 1.125, xlarge: 1.25 };
+const DEFAULT_FONT_SIZE = "normal";
+const FONT_SIZE_OPTIONS = [
+	{ k: "small", label: I18nKey.fontSizeSmall },
+	{ k: "normal", label: I18nKey.fontSizeNormal },
+	{ k: "large", label: I18nKey.fontSizeLarge },
+	{ k: "xlarge", label: I18nKey.fontSizeXLarge },
+];
+
+let fontSize = $state(DEFAULT_FONT_SIZE);
+
+function applyFontSize(name) {
+	const step = Object.hasOwn(FONT_SIZE_STEPS, name) ? FONT_SIZE_STEPS[name] : 1;
+	document.documentElement.style.setProperty(
+		"--content-font-scale",
+		String(step),
+	);
+}
+
+function setFontSize(name) {
+	fontSize = name;
+	setStorageItem("contentFontScale", name);
+	applyFontSize(name);
+}
+
+function resetFontSize() {
+	setFontSize(DEFAULT_FONT_SIZE);
+}
+
+// 初始化：读回用户的存档；值非法时退回默认档（避免写入异常值导致排版错乱）
+const storedFontSize = getStorageItem("contentFontScale");
+fontSize =
+	storedFontSize && Object.hasOwn(FONT_SIZE_STEPS, storedFontSize)
+		? storedFontSize
+		: DEFAULT_FONT_SIZE;
 </script>
 
 {#if hasAnyContent}
@@ -583,6 +620,34 @@ $effect(() => {
             </div>
         </div>
     {/if}
+
+    <!-- Font Size Section -->
+    <div class="mt-2 mb-2">
+        <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+            before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+            before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+        >
+            {i18n(I18nKey.fontSize)}
+            <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
+                    class:opacity-0={fontSize === DEFAULT_FONT_SIZE} class:pointer-events-none={fontSize === DEFAULT_FONT_SIZE} onclick={resetFontSize}>
+                <div class="text-(--btn-content)">
+                    <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
+                </div>
+            </button>
+        </div>
+        <div class="flex gap-2">
+            {#each FONT_SIZE_OPTIONS as opt (opt.k)}
+                <button
+                    class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                    class:opacity-60={fontSize !== opt.k}
+                    class:bg-(--btn-regular-bg-hover)={fontSize === opt.k}
+                    onclick={() => setFontSize(opt.k)}
+                >
+                    <span class="text-xs font-medium">{i18n(opt.label)}</span>
+                </button>
+            {/each}
+        </div>
+    </div>
 
     <!-- Overlay Settings Section -->
     {#if wallpaperMode === WALLPAPER_OVERLAY && hasOverlaySettings}

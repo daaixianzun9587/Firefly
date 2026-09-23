@@ -336,4 +336,9 @@ export const ru: Translation = {
 	[Key.passwordProtectedRss]:
 		"Эта статья зашифрована. Пожалуйста, посетите сайт для просмотра.",
 	[Key.scrollDown]: "Прокрутить вниз",
+	[Key.fontSize]: "Размер шрифта",
+	[Key.fontSizeSmall]: "Маленький",
+	[Key.fontSizeNormal]: "Обычный",
+	[Key.fontSizeLarge]: "Большой",
+	[Key.fontSizeXLarge]: "Очень большой",
 };
