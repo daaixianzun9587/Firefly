@@ -42,6 +42,11 @@ import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
 import { backgroundWallpaper, sakuraConfig, siteConfig } from "@/config";
 import type { WALLPAPER_MODE } from "@/types/config";
+import {
+	getStorageItem,
+	removeStorageItem,
+	setStorageItem,
+} from "@/utils/storage-utils";
 
 type OverlaySliderItem = {
 	key: "opacity" | "blur" | "cardOpacity";
@@ -220,7 +225,7 @@ function resetWallpaperMode() {
 
 function resetLayout() {
 	currentLayout = effectiveDefaultLayout;
-	localStorage.removeItem("postListLayout");
+	removeStorageItem("postListLayout");
 
 	// 触发自定义事件，通知页面布局已改变
 	const event = new CustomEvent("layoutChange", {
@@ -361,7 +366,7 @@ function switchLayout() {
 
 	isSwitching = true;
 	currentLayout = currentLayout === "list" ? "grid" : "list";
-	localStorage.setItem("postListLayout", currentLayout);
+	setStorageItem("postListLayout", currentLayout);
 
 	// 触发自定义事件，通知页面布局已改变
 	const event = new CustomEvent("layoutChange", {
@@ -403,7 +408,7 @@ onMount(() => {
 	overlayCardOpacity = getStoredOverlayCardOpacity();
 
 	// 从localStorage读取用户偏好布局
-	const savedLayout = localStorage.getItem("postListLayout");
+	const savedLayout = getStorageItem("postListLayout");
 	if (savedLayout && (savedLayout === "list" || savedLayout === "grid")) {
 		currentLayout = savedLayout;
 	} else {

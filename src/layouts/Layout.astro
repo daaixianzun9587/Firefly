@@ -755,6 +755,8 @@ const siteLang = lang.replace("_", "-");
 </style>
 
 <script>
+import { getStorageItem, removeStorageItem, setStorageItem } from "@/utils/storage-utils";
+
   import { pathsEqual, url } from "@/utils/url-utils";
   import {
     BANNER_HEIGHT,
@@ -1318,7 +1320,7 @@ function disableAnimation() {
       // 存储不可用时退回默认主题，不能让异常中断后续逻辑。
       let storedTheme = siteConfig.themeColor.defaultMode || "light";
       try {
-        storedTheme = localStorage.getItem("theme") || storedTheme;
+        storedTheme = getStorageItem("theme") || storedTheme;
       } catch (e) {
         // 隐私模式 / 禁用站点存储：沿用默认主题
       }

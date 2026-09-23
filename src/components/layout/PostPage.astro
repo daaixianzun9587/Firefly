@@ -91,13 +91,15 @@ const initialLayoutClass =
 </script>
 
 <script>
+import { getStorageItem, removeStorageItem, setStorageItem } from "@/utils/storage-utils";
+
   // 动态布局切换脚本
   function initLayout() {
     const postListContainer = document.getElementById("post-list-container");
     if (!postListContainer) return;
 
     // 从localStorage读取用户偏好
-    const savedLayout = localStorage.getItem("postListLayout");
+    const savedLayout = getStorageItem("postListLayout");
     const defaultLayout =
       postListContainer.getAttribute("data-default-layout") || "list";
     const mobileDefaultLayout =

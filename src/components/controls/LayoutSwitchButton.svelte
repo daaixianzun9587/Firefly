@@ -1,6 +1,11 @@
 <script lang="ts">
 import { onMount } from "svelte";
 import { siteConfig } from "@/config";
+import {
+	getStorageItem,
+	removeStorageItem,
+	setStorageItem,
+} from "@/utils/storage-utils";
 
 export let currentLayout: "list" | "grid" = "list";
 
@@ -25,7 +30,7 @@ onMount(() => {
 	checkScreenSize();
 
 	// 从localStorage读取用户偏好，如果没有则使用传入的默认值
-	const savedLayout = localStorage.getItem("postListLayout");
+	const savedLayout = getStorageItem("postListLayout");
 	if (savedLayout && (savedLayout === "list" || savedLayout === "grid")) {
 		currentLayout = savedLayout;
 	} else {
@@ -52,7 +57,7 @@ function switchLayout() {
 
 	isSwitching = true;
 	currentLayout = currentLayout === "list" ? "grid" : "list";
-	localStorage.setItem("postListLayout", currentLayout);
+	setStorageItem("postListLayout", currentLayout);
 
 	// 触发自定义事件，通知父组件布局已改变
 	const event = new CustomEvent("layoutChange", {
