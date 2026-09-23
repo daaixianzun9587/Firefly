@@ -320,6 +320,7 @@ enum I18nKey {
 	passwordSubmit = "passwordSubmit",
 	passwordError = "passwordError",
 	passwordProtectedRss = "passwordProtectedRss",
+	scrollDown = "scrollDown",
 }
 
 export default I18nKey;

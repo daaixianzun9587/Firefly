@@ -1,11 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 ---
 
 <div
   id="scroll-down-indicator"
   class="scroll-down-indicator"
+  role="button"
+  tabindex="0"
+  aria-label={i18n(I18nKey.scrollDown)}
   onclick="document.getElementById('main-grid')?.scrollIntoView({ behavior: 'smooth' })"
+  onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); document.getElementById('main-grid')?.scrollIntoView({ behavior: 'smooth' }); }"
 >
   <Icon name="material-symbols:keyboard-arrow-down-rounded" class="scroll-down-icon" />
 </div>

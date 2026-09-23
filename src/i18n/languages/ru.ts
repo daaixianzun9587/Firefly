@@ -335,4 +335,5 @@ export const ru: Translation = {
 	[Key.passwordError]: "Неверный пароль, попробуйте снова.",
 	[Key.passwordProtectedRss]:
 		"Эта статья зашифрована. Пожалуйста, посетите сайт для просмотра.",
+	[Key.scrollDown]: "Прокрутить вниз",
 };
