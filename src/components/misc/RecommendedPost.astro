@@ -154,7 +154,10 @@ function renderRandomPosts() {
     var base = apiUrl.replace(/\/api\/allPostMeta\.json$/, '');
 
     picked.forEach(function(post, idx) {
-      var href = base + '/posts/' + post.id + '/';
+      // id 可能带扩展名（.md/.mdx/.markdown）—— 左栏用的是 getPostUrlBySlug()，
+      // 它内部会 removeFileExtension()；右栏是内联脚本不能 import，故就地做同等处理，
+      // 否则一旦 id 带扩展名就会拼出 /posts/xxx.md/ 这类错链（当前文章 id 无扩展名，属预防）。
+      var href = base + '/posts/' + String(post.id).replace(/\.(md|mdx|markdown)$/i, '') + '/';
 
       var a = document.createElement('a');
       a.href = href;
