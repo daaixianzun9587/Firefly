@@ -39,7 +39,11 @@ const className = Astro.props.class;
             <slot name="title-icon" />
         </div>
     )}
-    <div id={id} class:list={["collapse-wrapper px-4 overflow-hidden", {"collapsed": isCollapsed, "pt-4": !name}]}>
+    {/* 这里原本是 id={id}。但同一小部件会在桌面侧栏与移动端底栏各渲染一份，
+        导致 id 重复（announcement / categories / tags / site-stats 各出现 2 次）。
+        改为带前缀的 class —— 语义仍是"这个实例的折叠容器"，且不再有重复 id。
+        对应的选择器见下方脚本（.collapse-${id}）。 */}
+    <div class:list={[`collapse-${id}`, "collapse-wrapper px-4 overflow-hidden", {"collapsed": isCollapsed, "pt-4": !name}]}>
         <slot></slot>
     </div>
     {isCollapsed && <div class="expand-btn px-4 -mb-2">
@@ -95,7 +99,8 @@ const className = Astro.props.class;
 
             const id = this.dataset.id;
             const btn = this.querySelector('.expand-btn button') as HTMLButtonElement | null;
-            const wrapper = this.querySelector(`#${id}`)
+            // 折叠容器用 .collapse-<id> 定位（原来是 id，因多实例渲染会造成重复 id）
+            const wrapper = this.querySelector(`.collapse-${id}`)
 
             if (!btn || !wrapper)
                 return;
