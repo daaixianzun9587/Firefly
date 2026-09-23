@@ -1,3 +1,5 @@
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
 import type { MusicPlayerConfig } from "../types/config";
 
 // 音乐播放器配置
@@ -61,3 +63,31 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 		],
 	},
 };
+
+/**
+ * 播放器「视图配置」。
+ *
+ * 内容完全由 musicConfig + 当前语言决定，**与实例无关**（实例之间只有容器 id 不同）。
+ * 之所以抽到配置模块：MusicPlayer 的脚本现已改为**打包模块**，
+ * 可以在这里直接静态引入 —— 从而让多份实例共用同一份配置，
+ * 而不是像以前那样通过 define:vars 逐实例注入（那会强制 is:inline，
+ * 导致整段播放器代码在页面里重复内联多份）。
+ */
+export function getMusicViewConfig(): Record<string, unknown> {
+	return {
+		showLyrics: musicPlayerConfig.showLyrics ?? true,
+		i18n: {
+			noPlaying: i18n(I18nKey.musicNoPlaying),
+			lyrics: i18n(I18nKey.musicLyrics),
+			noLyrics: i18n(I18nKey.musicNoLyrics),
+			loadingLyrics: i18n(I18nKey.musicLoadingLyrics),
+			failedLyrics: i18n(I18nKey.musicFailedLyrics),
+			noSongs: i18n(I18nKey.musicNoSongs),
+			error: i18n(I18nKey.musicError),
+			play: i18n(I18nKey.musicPlay),
+			pause: i18n(I18nKey.musicPause),
+			noCover: i18n(I18nKey.musicNoCover),
+			music: i18n(I18nKey.music),
+		},
+	};
+}
