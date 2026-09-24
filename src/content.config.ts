@@ -23,6 +23,19 @@ const postsCollection = defineCollection({
 		password: z.string().optional().default(""),
 		passwordHint: z.string().optional().default(""),
 
+		/* 附件下载（可选）：path 为站点根相对路径（对应 public/ 下）或 http(s) 外链 */
+		attachments: z
+			.array(
+				z.object({
+					path: z.string(),
+					name: z.string().optional().default(""),
+				}),
+			)
+			.optional()
+			.default([]),
+		/* 为 true 时不在页面渲染下载区块（注意：文件本身仍可被直链访问） */
+		attachmentsProtected: z.boolean().optional().default(false),
+
 		/* For internal use */
 		prevTitle: z.string().default(""),
 		prevSlug: z.string().default(""),

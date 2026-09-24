@@ -340,4 +340,6 @@ export const en: Translation = {
 	[Key.fontSizeNormal]: "Normal",
 	[Key.fontSizeLarge]: "Large",
 	[Key.fontSizeXLarge]: "X-Large",
+	[Key.attachments]: "Attachments",
+	[Key.download]: "Download",
 };

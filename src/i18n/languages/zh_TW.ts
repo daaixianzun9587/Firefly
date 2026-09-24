@@ -331,4 +331,6 @@ export const zh_TW: Translation = {
 	[Key.fontSizeNormal]: "標準",
 	[Key.fontSizeLarge]: "大",
 	[Key.fontSizeXLarge]: "特大",
+	[Key.attachments]: "附件下載",
+	[Key.download]: "下載",
 };

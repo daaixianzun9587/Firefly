@@ -1,0 +1,115 @@
+---
+import { Icon } from "astro-icon/components";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import { resolveAttachments } from "@/utils/attachment-utils";
+
+interface Props {
+	/** frontmatter 里的 attachments 原值 */
+	attachments: unknown;
+	/** 文章 id，仅用于报错信息 */
+	slug: string;
+	/** 为 true 时隐藏下载区块 */
+	protected?: boolean;
+}
+
+const { attachments, slug, protected: isProtected = false } = Astro.props;
+
+// Astro 组件在构建期运行于 Node，可直接读文件系统；
+// 这里以进程工作目录定位 public/（构建时即项目根目录）。
+const publicDir = `${process.cwd()}/public`;
+
+// 开关打开时直接不解析、不渲染（文件本身仍可被直链访问，见方案文档§"已知边界"）
+const items = isProtected
+	? []
+	: resolveAttachments(attachments, publicDir, slug);
+
+// 扩展名徽标：用文本而非新图标名，避免依赖图标集中可能不存在的 name
+function badge(ext: string): string {
+	if (!ext) return "FILE";
+	const map: Record<string, string> = {
+		zip: "ZIP",
+		rar: "RAR",
+		"7z": "7Z",
+		tar: "TAR",
+		gz: "GZ",
+		pdf: "PDF",
+		html: "HTML",
+		htm: "HTML",
+		doc: "DOC",
+		docx: "DOC",
+		xls: "XLS",
+		xlsx: "XLS",
+		csv: "CSV",
+		ppt: "PPT",
+		pptx: "PPT",
+		txt: "TXT",
+		md: "MD",
+		png: "IMG",
+		jpg: "IMG",
+		jpeg: "IMG",
+		webp: "IMG",
+		avif: "IMG",
+		gif: "IMG",
+		svg: "IMG",
+		mp3: "AUDIO",
+		wav: "AUDIO",
+		flac: "AUDIO",
+		mp4: "VIDEO",
+		webm: "VIDEO",
+	};
+	return map[ext] ?? ext.toUpperCase();
+}
+
+/** 依类型给出徽标配色（走现有主题变量，不新增硬编码色值） */
+function badgeClass(ext: string): string {
+	if (["zip", "rar", "7z", "tar", "gz"].includes(ext))
+		return "bg-(--btn-regular-bg) text-(--btn-content)";
+	if (ext === "pdf") return "bg-(--btn-regular-bg) text-(--btn-content)";
+	if (["html", "htm"].includes(ext))
+		return "bg-(--btn-regular-bg) text-(--btn-content)";
+	return "bg-(--btn-regular-bg) text-(--btn-content)";
+}
+---
+
+{items.length > 0 && (
+  <div class="card-base p-5 md:p-6 mb-4">
+    <div class="flex items-center gap-2 pb-3 mb-1 border-b border-dashed border-(--line-divider)">
+      <Icon name="material-symbols:download" class="text-xl text-(--primary)" />
+      <span class="text-base font-bold text-black/75 dark:text-white/75 transition">
+        {i18n(I18nKey.attachments)}
+      </span>
+      <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-(--btn-regular-bg) text-(--btn-content) transition">
+        {items.length}
+      </span>
+    </div>
+
+    {items.map((item) => (
+      <a
+        href={item.url}
+        download
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex items-center gap-3 px-3 py-3 -mx-1 rounded-lg transition-all hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98]"
+      >
+        <div class:list={["shrink-0 px-1.5 py-0.5 rounded text-[0.65rem] font-bold tracking-wide", badgeClass(item.ext)]}>
+          {badge(item.ext)}
+        </div>
+
+        <div class="flex-1 min-w-0">
+          <div class="font-bold text-sm text-black/75 dark:text-white/75 truncate transition group-hover:text-(--primary)">
+            {item.name}
+          </div>
+          <div class="text-xs text-black/30 dark:text-white/30 transition mt-0.5">
+            {item.sizeText}{item.isExternal ? " · 外链" : ""}
+          </div>
+        </div>
+
+        <Icon
+          name="material-symbols:download"
+          class="shrink-0 text-xl text-black/15 dark:text-white/15 transition group-hover:text-(--primary)"
+        />
+      </a>
+    ))}
+  </div>
+)}

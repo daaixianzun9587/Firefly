@@ -341,4 +341,6 @@ export const ru: Translation = {
 	[Key.fontSizeNormal]: "Обычный",
 	[Key.fontSizeLarge]: "Большой",
 	[Key.fontSizeXLarge]: "Очень большой",
+	[Key.attachments]: "Вложения",
+	[Key.download]: "Скачать",
 };

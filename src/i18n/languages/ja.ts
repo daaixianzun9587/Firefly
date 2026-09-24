@@ -339,4 +339,6 @@ export const ja: Translation = {
 	[Key.fontSizeNormal]: "標準",
 	[Key.fontSizeLarge]: "大",
 	[Key.fontSizeXLarge]: "特大",
+	[Key.attachments]: "添付ファイル",
+	[Key.download]: "ダウンロード",
 };

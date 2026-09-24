@@ -326,6 +326,8 @@ enum I18nKey {
 	fontSizeNormal = "fontSizeNormal",
 	fontSizeLarge = "fontSizeLarge",
 	fontSizeXLarge = "fontSizeXLarge",
+	attachments = "attachments",
+	download = "download",
 }
 
 export default I18nKey;
