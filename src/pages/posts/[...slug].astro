@@ -426,13 +426,13 @@ const relatedPosts = await getRelatedPosts(entry, 5);
             )
           }
 
-          {
-            <PostAttachments
-              attachments={entry.data.attachments}
-              slug={entry.id}
-              protected={entry.data.attachmentsProtected}
-            />
+          <PostAttachments
+            attachments={entry.data.attachments}
+            slug={entry.id}
+            protected={entry.data.attachmentsProtected}
+          />
 
+          {
             licenseConfig.enable && (
               <License
                 title={entry.data.title}
