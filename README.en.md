@@ -1,9 +1,9 @@
 
-<img src="./docs/images/1131.png" width = "350" height = "500" alt="Firefly" align=right />
+<img src="./docs/images/1131.png" width = "350" height = "500" alt="StarSeeker" align=right />
 
 <div align="center">
 
-# Firefly
+# StarSeeker
 > A Fresh and Beautiful Astro Static Blog Theme Template
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
@@ -42,26 +42,26 @@
 
 🔧 Highly Configurable: Most features can be customized through configuration files
 
-<img alt="firefly" src="./docs/images/1.webp" />
+<img alt="starseeker" src="./docs/images/1.webp" />
 <img alt="Lighthouse" src="./docs/images/Lighthouse.png" />
 
 >[!TIP]
 >
->Firefly is a fresh, beautiful, and modern personal blog theme template based on the Astro framework and the Fuwari template, designed for tech enthusiasts and content creators. It integrates a modern web tech stack, offering rich feature modules and a highly customizable interface so you can easily build a professional and visually appealing personal blog.
+>StarSeeker is a fresh, beautiful, and modern personal blog theme template based on the Astro framework and the Fuwari template, designed for tech enthusiasts and content creators. It integrates a modern web tech stack, offering rich feature modules and a highly customizable interface so you can easily build a professional and visually appealing personal blog.
 >
->In terms of key layouts, Firefly innovatively adds dual sidebars, an article grid (multi-column) layout, and a masonry layout.
+>In terms of key layouts, StarSeeker innovatively adds dual sidebars, an article grid (multi-column) layout, and a masonry layout.
 >
 >It also adds widgets such as site statistics, calendar, table of contents, music player, and quick category navigation, making both the sidebar and the overall page layout richer.
 >
 >At the same time, it also adds components such as share posters, related post recommendations, and random posts, making article pages more content-rich.
 >
->**If you reference or use the component designs and related code above from Firefly, please credit Firefly.**
+>**If you reference or use the component designs and related code above from StarSeeker, please credit StarSeeker.**
 >
->Firefly also preserves the original fuwari layout, which can be freely switched in the configuration file according to your preferences.
+>StarSeeker also preserves the original fuwari layout, which can be freely switched in the configuration file according to your preferences.
 >
->**For more layout configurations and demos, please see: [Firefly Layout System Details](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
+>**For more layout configurations and demos, please see: [StarSeeker Layout System Details](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
 >
->Firefly supports i18n multilingual UI, but except for Simplified Chinese, other languages are AI-translated. If you find any errors, feel free to submit a [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) to help improve them.
+>StarSeeker supports i18n multilingual UI, but except for Simplified Chinese, other languages are AI-translated. If you find any errors, feel free to submit a [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) to help improve them.
 
 ## ✨ Features
 
@@ -98,14 +98,14 @@ If you have useful features and optimizations, please submit a [Pull Request](ht
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Cuteleaf/Firefly.git
-   cd Firefly
+   cd StarSeeker
    ```
    
    **First [Fork](https://github.com/CuteLeaf/Firefly/fork) to your own repository then clone (recommended). Don't forget to Star before Fork!**
 
    ```bash
    git clone https://github.com/you-github-name/Firefly.git
-   cd Firefly
+   cd StarSeeker
    ```
 3. **Install dependencies:**
    ```bash
@@ -144,7 +144,7 @@ If you have useful features and optimizations, please submit a [Pull Request](ht
 
 ## 📖 Configuration
 
-> 📚 **Detailed Configuration Documentation**: Check [Firefly Documentation](https://docs-firefly.cuteleaf.cn/) for complete configuration guide
+> 📚 **Detailed Configuration Documentation**: Check [StarSeeker Documentation](https://docs-firefly.cuteleaf.cn/) for complete configuration guide
 
 ### Setting Website Language
 
@@ -234,9 +234,9 @@ All commands need to be executed in the project root directory:
 
 ## 🙏 Acknowledgments
 
-Special thanks to [saicaca](https://github.com/saicaca) for developing the [fuwari](https://github.com/saicaca/fuwari) template, which Firefly is based on for secondary development.
+Special thanks to [saicaca](https://github.com/saicaca) for developing the [fuwari](https://github.com/saicaca/fuwari) template, which StarSeeker is based on for secondary development.
 
-The copyright of Firefly-related image assets belongs to [miHoYo](https://www.mihoyo.com/), the developer of the game ["Honkai: Star Rail"](https://sr.mihoyo.com/).
+The copyright of StarSeeker-related image assets belongs to [miHoYo](https://www.mihoyo.com/), the developer of the game ["Honkai: Star Rail"](https://sr.mihoyo.com/).
 
 ### Tech Stack
 
@@ -253,7 +253,7 @@ The copyright of Firefly-related image assets belongs to [miHoYo](https://www.mi
 
 ### Other References
 - Blogger `霞葉` [Bangumi Collection](https://kasuha.com/posts/fuwari-enhance-ep2/) page component
-- Bilibili creator `公公的日常` Q-version [Firefly Mascot Spine Model](https://www.bilibili.com/video/BV1fuVzzdE5y)
+- Bilibili creator `公公的日常` Q-version [StarSeeker Mascot Spine Model](https://www.bilibili.com/video/BV1fuVzzdE5y)
 
 ## 📝 License
 
@@ -263,7 +263,7 @@ Originally forked from [saicaca/fuwari](https://github.com/saicaca/fuwari). Than
 
 **Copyright Notice:**
 - Copyright (c) 2024 [saicaca](https://github.com/saicaca) - [fuwari](https://github.com/saicaca/fuwari)
-- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Firefly](https://github.com/CuteLeaf/Firefly)
+- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [StarSeeker](https://github.com/CuteLeaf/Firefly)
 
 Under the MIT license, you are free to use, modify, and distribute the code, but you must retain the above copyright notice.
 

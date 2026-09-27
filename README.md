@@ -1,9 +1,9 @@
 
-<img src="./docs/images/1131.png" width = "350" height = "500" alt="Firefly" align=right />
+<img src="./docs/images/1131.png" width = "350" height = "500" alt="StarSeeker" align=right />
 
 <div align="center">
 
-# 流萤 / Firefly 
+# 流萤 / StarSeeker 
 > 一款清新美观的 Astro 静态博客主题模板
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
@@ -43,26 +43,26 @@
 
 🔧 高度可配置: 大部分功能模块均可通过配置文件自定义
 
-<img alt="firefly" src="./docs/images/1.webp" />
+<img alt="starseeker" src="./docs/images/1.webp" />
 <img alt="Lighthouse" src="./docs/images/Lighthouse.png" />
 
 >[!TIP]
 >
->Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+>StarSeeker 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
 > 
->在重要的布局上，Firefly 创新性地增加了左右双侧边栏、文章网格(多列)布局、瀑布流布局。
+>在重要的布局上，StarSeeker 创新性地增加了左右双侧边栏、文章网格(多列)布局、瀑布流布局。
 >
 >增加了站点统计、日历、文章目录、音乐播放器、快捷分类导航等小组件，让侧边栏和整体页面布局更加丰富。
 >
 >同时也增加了分享海报、相关文章推荐、随机文章等组件，让文章页面内容更丰富。
 >
->**如果你参考或使用了 Firefly 以上组件设计和相关代码，请注明来自 Firefly。**
+>**如果你参考或使用了 StarSeeker 以上组件设计和相关代码，请注明来自 StarSeeker。**
 >
->Firefly 也保留了原版 fuwari 的布局，可根据自己的喜好在配置文件中自由切换。
+>StarSeeker 也保留了原版 fuwari 的布局，可根据自己的喜好在配置文件中自由切换。
 >
->**更多布局配置及演示请查看：[Firefly 布局系统详解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
+>**更多布局配置及演示请查看：[StarSeeker 布局系统详解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
 >
->Firefly 支持i18n多语言UI，但除了简体中文，其他语言均为AI翻译转换，如有错误，欢迎提交 [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) 修正。
+>StarSeeker 支持i18n多语言UI，但除了简体中文，其他语言均为AI翻译转换，如有错误，欢迎提交 [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) 修正。
 
 ## ✨ 功能特性
 
@@ -98,14 +98,14 @@
 1. **克隆仓库：**
    ```bash
    git clone https://github.com/Cuteleaf/Firefly.git
-   cd Firefly
+   cd StarSeeker
    ```
    
    **先 [Fork](https://github.com/CuteLeaf/Firefly/fork) 到自己仓库在克隆（推荐），记得先点 Star 在 Fork 哦！**
 
    ```bash
    git clone https://github.com/you-github-name/Firefly.git
-   cd Firefly
+   cd StarSeeker
    ```
 3. **安装依赖：**
    ```bash
@@ -147,7 +147,7 @@ Cloudflare Workers部署：[【不用服务器，无需备案，零成本搭建�
 
 ## 📖 配置说明
 
-> 📚 **详细配置文档**: 查看 [Firefly使用文档](https://docs-firefly.cuteleaf.cn/) 获取完整的配置指南
+> 📚 **详细配置文档**: 查看 [StarSeeker使用文档](https://docs-firefly.cuteleaf.cn/) 获取完整的配置指南
 
 ### 设置网站语言
 
@@ -236,7 +236,7 @@ comment: true    # 是否允许评论
 
 ## 🙏 致谢
 
-非常感谢 [saicaca](https://github.com/saicaca) 开发的 [fuwari](https://github.com/saicaca/fuwari) 模板，Firefly 就是基于这个模板二次开发
+非常感谢 [saicaca](https://github.com/saicaca) 开发的 [fuwari](https://github.com/saicaca/fuwari) 模板，StarSeeker 就是基于这个模板二次开发
 
 流萤部分相关图片素材版权归游戏 [《崩坏：星穹铁道》](https://sr.mihoyo.com/) 开发商 [米哈游](https://www.mihoyo.com/) 所有
 
@@ -265,7 +265,7 @@ comment: true    # 是否允许评论
 
 **版权声明：**
 - Copyright (c) 2024 [saicaca](https://github.com/saicaca) - [fuwari](https://github.com/saicaca/fuwari)
-- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Firefly](https://github.com/CuteLeaf/Firefly) 
+- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [StarSeeker](https://github.com/CuteLeaf/Firefly) 
 
 根据 MIT 开源协议，你可以自由使用、修改、分发代码，但需保留上述版权声明。
 

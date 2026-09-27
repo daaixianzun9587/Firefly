@@ -2,9 +2,9 @@
 title: Markdown 扩展功能
 published: 1970-01-01
 updated: 1970-01-01
-description: "了解 Firefly 中的 Markdown 功能"
+description: "了解 StarSeeker 中的 Markdown 功能"
 image: ""
-tags: [演示, 示例, Markdown, Firefly]
+tags: [演示, 示例, Markdown, StarSeeker]
 category: "文章示例"
 draft: false
 ---
@@ -23,7 +23,7 @@ draft: false
 
 ## 提醒框(Admonitions)配置
 
-Firefly 采用了 [rehype-callouts](https://github.com/lin-stephanie/rehype-callouts) 插件，支持了三种风格的提醒框主题：`GitHub`、`Obsidian` 和 `VitePress`。您可以在 `src/config/siteConfig.ts` 中进行配置：
+StarSeeker 采用了 [rehype-callouts](https://github.com/lin-stephanie/rehype-callouts) 插件，支持了三种风格的提醒框主题：`GitHub`、`Obsidian` 和 `VitePress`。您可以在 `src/config/siteConfig.ts` 中进行配置：
 
 ```typescript
 // src/config/siteConfig.ts
@@ -261,18 +261,18 @@ export const siteConfig: SiteConfig = {
 **图注恒定底端对齐：** 不论上面的图片长宽如何变化，在同一行的所有图像解释文字（图注）都会对标到一条完美的水平基线上了。
 
 [grid]
-![示例图片一](./images/firefly1.avif)
-![示例图片二](./images/firefly2.avif)
-![示例图片二](./images/firefly3.avif)
+![示例图片一](./images/starseeker1.avif)
+![示例图片二](./images/starseeker2.avif)
+![示例图片二](./images/starseeker3.avif)
 [/grid]
 
 **基本语法**
 
 ```markdown
 [grid]
-![示例图片一](./images/firefly1.avif)
-![示例图片二](./images/firefly2.avif)
-![示例图片二](./images/firefly3.avif)
+![示例图片一](./images/starseeker1.avif)
+![示例图片二](./images/starseeker2.avif)
+![示例图片二](./images/starseeker3.avif)
 [/grid]
 ```
 

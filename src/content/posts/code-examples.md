@@ -1,12 +1,12 @@
 ---
-title: Firefly 代码块示例
+title: StarSeeker 代码块示例
 published: 1970-01-03
 pinned: false
-description: 在Firefly中使用表达性代码的代码块在 Markdown 中的外观。
-tags: [Markdown, Firefly]
+description: 在StarSeeker中使用表达性代码的代码块在 Markdown 中的外观。
+tags: [Markdown, StarSeeker]
 category: 文章示例
 draft: false
-image: ./images/firefly3.avif
+image: ./images/starseeker3.avif
 # 附件下载演示（可安全删除本段与 public/files/code-examples/ 目录）
 attachments:
   - path: files/code-examples/demo-attachment.pdf

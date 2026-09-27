@@ -5,7 +5,7 @@ export const galleryConfig: GalleryConfig = {
 	// 相册列表
 	albums: [
 		// 支持jpg/png/webp/avif/gif格式
-		// id: 相册唯一标识符（用于目录命名和URL路径），比如设置：id: "firefly-2026", 对应 public/gallery/firefly-2026/目录
+		// id: 相册唯一标识符（用于目录命名和URL路径），比如设置：id: "starseeker-2026", 对应 public/gallery/starseeker-2026/目录
 		// cover: 手动指定封面图（可选，不填会把cover.*文件作为封面图，如果没有cover.*文件，则使用第一张图片作为封面图）
 		// name: 相册名称
 		// description: 相册描述
@@ -16,7 +16,7 @@ export const galleryConfig: GalleryConfig = {
 		// passwordHint: 密码提示，设置后在输入密码错误时显示（可选，需配合password使用）
 		// 每添加一个数组项就相当于添加了一个相册，记得在 public/gallery/ 目录下创建对应的子目录并放入图片
 		{
-			id: "firefly-2026",
+			id: "starseeker-2026",
 			name: "可爱流萤",
 			description: "飞萤之火自无梦的长夜亮起，绽放在终竟的明天。",
 			location: "崩坏：星穹铁道",

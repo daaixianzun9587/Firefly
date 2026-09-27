@@ -54,7 +54,7 @@ export async function GET(context: APIContext) {
 		title: siteConfig.title,
 		description: siteConfig.subtitle || "No description",
 		site: context.site ?? "https://firefly.cuteleaf.cn",
-		customData: `<templateTheme>Firefly</templateTheme>
+		customData: `<templateTheme>StarSeeker</templateTheme>
 		<templateThemeVersion>${pkg.version}</templateThemeVersion>
 		<templateThemeUrl>https://github.com/CuteLeaf/Firefly</templateThemeUrl>
 		<lastBuildDate>${formatDateI18nWithTime(new Date())}</lastBuildDate>`,

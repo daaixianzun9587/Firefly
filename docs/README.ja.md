@@ -1,9 +1,9 @@
 
-<img src="./images/1131.png" width = "350" height = "500" alt="Firefly" align=right />
+<img src="./images/1131.png" width = "350" height = "500" alt="StarSeeker" align=right />
 
 <div align="center">
 
-# Firefly
+# StarSeeker
 > 美しくモダンな Astro 静的ブログテーマテンプレート
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
@@ -43,26 +43,26 @@
 
 🔧 高度にカスタマイズ可能：ほとんどの機能モジュールは設定ファイルでカスタマイズ可能
 
-<img alt="firefly" src="./images/1.webp" />
+<img alt="starseeker" src="./images/1.webp" />
 <img alt="Lighthouse" src="./images/Lighthouse.png" />
 
 >[!TIP]
 >
->Firefly は、Astro フレームワークと Fuwari テンプレートをベースに開発された、清新で美しくモダンな個人ブログテーマテンプレートです。技術愛好家やコンテンツクリエイター向けに設計されており、モダンな Web 技術スタックを統合し、豊富な機能モジュールと高いカスタマイズ性を備えたインターフェースで、プロフェッショナルで美しい個人ブログを手軽に構築できます。
+>StarSeeker は、Astro フレームワークと Fuwari テンプレートをベースに開発された、清新で美しくモダンな個人ブログテーマテンプレートです。技術愛好家やコンテンツクリエイター向けに設計されており、モダンな Web 技術スタックを統合し、豊富な機能モジュールと高いカスタマイズ性を備えたインターフェースで、プロフェッショナルで美しい個人ブログを手軽に構築できます。
 >
->主要なレイアウト面では、Firefly は左右のデュアルサイドバー、記事グリッド（多カラム）レイアウト、メイソンリーレイアウトを革新的に追加しています。
+>主要なレイアウト面では、StarSeeker は左右のデュアルサイドバー、記事グリッド（多カラム）レイアウト、メイソンリーレイアウトを革新的に追加しています。
 >
 >さらに、サイト統計、カレンダー、目次、音楽プレーヤー、クイックカテゴリーナビゲーションなどのウィジェットを追加し、サイドバーとページ全体のレイアウトをより豊かにしています。
 >
 >同時に、共有ポスター、関連記事のおすすめ、ランダム記事などのコンポーネントも追加し、記事ページの内容をさらに充実させています。
 >
->**Firefly の上記コンポーネント設計や関連コードを参考または利用する場合は、出典として Firefly を明記してください。**
+>**StarSeeker の上記コンポーネント設計や関連コードを参考または利用する場合は、出典として StarSeeker を明記してください。**
 >
->Firefly はオリジナルの fuwari レイアウトも保持しており、設定ファイルで好みに応じて自由に切り替えられます。
+>StarSeeker はオリジナルの fuwari レイアウトも保持しており、設定ファイルで好みに応じて自由に切り替えられます。
 >
->**レイアウト設定とデモの詳細については、[Firefly レイアウトシステム詳解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)をご覧ください**
+>**レイアウト設定とデモの詳細については、[StarSeeker レイアウトシステム詳解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)をご覧ください**
 >
->Firefly は i18n の多言語 UI をサポートしていますが、簡体字中国語以外の言語は AI 翻訳です。誤りがある場合は、[Pull Request](https://github.com/CuteLeaf/Firefly/pulls) の提出を歓迎します。
+>StarSeeker は i18n の多言語 UI をサポートしていますが、簡体字中国語以外の言語は AI 翻訳です。誤りがある場合は、[Pull Request](https://github.com/CuteLeaf/Firefly/pulls) の提出を歓迎します。
 
 ## ✨ 機能
 
@@ -99,14 +99,14 @@
 1. **リポジトリのクローン：**
    ```bash
    git clone https://github.com/Cuteleaf/Firefly.git
-   cd Firefly
+   cd StarSeeker
    ```
    
    **まず自分のリポジトリに[Fork](https://github.com/CuteLeaf/Firefly/fork)してからクローン（推奨）。クローンする前にStarをクリックするのを忘れずに！**
 
    ```bash
    git clone https://github.com/you-github-name/Firefly.git
-   cd Firefly
+   cd StarSeeker
    ```
 3. **依存関係のインストール：**
    ```bash
@@ -145,7 +145,7 @@
 
 ## 📖 設定説明
 
-> 📚 **詳細な設定ドキュメント**：[Fireflyドキュメント](https://docs-firefly.cuteleaf.cn/)で完全な設定ガイドを確認してください
+> 📚 **詳細な設定ドキュメント**：[StarSeekerドキュメント](https://docs-firefly.cuteleaf.cn/)で完全な設定ガイドを確認してください
 
 ### ウェブサイトの言語設定
 
@@ -234,7 +234,7 @@ Astroがデフォルトで対応している[GitHub Flavored Markdown](https://g
 
 ## 🙏 謝辞
 
-[fuwari](https://github.com/saicaca/fuwari)テンプレートを開発した[saicaca](https://github.com/saicaca)に深く感謝します。Fireflyはこのテンプレートをベースに二次開発されています。
+[fuwari](https://github.com/saicaca/fuwari)テンプレートを開発した[saicaca](https://github.com/saicaca)に深く感謝します。StarSeekerはこのテンプレートをベースに二次開発されています。
 
 蛍関連の画像素材の著作権はゲーム[「崩壊：スターレイル」](https://sr.mihoyo.com/)の開発元[miHoYo](https://www.mihoyo.com/)に帰属します。
 
@@ -263,7 +263,7 @@ Astroがデフォルトで対応している[GitHub Flavored Markdown](https://g
 
 **著作権表示：**
 - Copyright (c) 2024 [saicaca](https://github.com/saicaca) - [fuwari](https://github.com/saicaca/fuwari)
-- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [Firefly](https://github.com/CuteLeaf/Firefly)
+- Copyright (c) 2025 [CuteLeaf](https://github.com/CuteLeaf) - [StarSeeker](https://github.com/CuteLeaf/Firefly)
 
 MITライセンスに基づき、コードの自由な使用、変更、配布が許可されていますが、上記の著作権表示を保持する必要があります。
 

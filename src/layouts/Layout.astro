@@ -1354,7 +1354,7 @@ function disableAnimation() {
       setTimeout(() => {
         if (document.getElementById("tcomment")) {
           // 触发自定义事件，通知评论系统页面已完全加载
-          const pageLoadedEvent = new CustomEvent("firefly:page:loaded", {
+          const pageLoadedEvent = new CustomEvent("starseeker:page:loaded", {
             detail: {
               path: window.location.pathname,
               timestamp: Date.now(),
@@ -1362,7 +1362,7 @@ function disableAnimation() {
           });
           document.dispatchEvent(pageLoadedEvent);
           console.log(
-            "Layout: 触发 firefly:page:loaded 事件，路径:",
+            "Layout: 触发 starseeker:page:loaded 事件，路径:",
             window.location.pathname
           );
         }
@@ -1412,8 +1412,8 @@ function disableAnimation() {
   //      而本脚本是打包模块、只会执行一次 —— 执行到这里时 window.swup 基本一定还不存在。
   //   2. 模块体在 swup 导航后不会重跑（ESM 模块缓存），所以也没有第二次机会。
   //   实测确认：改前站内切页后，控制台不会出现 setup() 里 visit:end 钩子发出的日志
-  //   "Layout: 触发 firefly:page:loaded 事件" —— 即 setup() 从未执行，
-  //   其内部 7 个 swup 钩子（进度条 / 导航栏动画 / 全屏壁纸回顶 / 网格列数 / firefly:page:loaded 等）全部失效。
+  //   "Layout: 触发 starseeker:page:loaded 事件" —— 即 setup() 从未执行，
+  //   其内部 7 个 swup 钩子（进度条 / 导航栏动画 / 全屏壁纸回顶 / 网格列数 / starseeker:page:loaded 等）全部失效。
   //
   // 用轮询而不是监听事件：这里需要的是"swup 实例已可用"这个状态，它不是任何一个事件。
   // 只调用一次：setup() 内部是 hooks.replace / hooks.on 注册，重复调用会重复挂钩子。

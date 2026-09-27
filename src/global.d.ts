@@ -19,7 +19,7 @@ declare global {
 				}>;
 			}>;
 		};
-		__fireflyMusic?: {
+		__starseekerMusic?: {
 			init: () => Promise<void>;
 			getState: () => {
 				playlist: Array<{

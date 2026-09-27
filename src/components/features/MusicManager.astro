@@ -59,7 +59,7 @@ const managerConfigStr = JSON.stringify({
 <script is:inline data-swup-ignore-script define:vars={{ managerConfigStr }}>
 (function () {
     // Singleton guard – only create once
-    if (window.__fireflyMusic) return;
+    if (window.__starseekerMusic) return;
 
     // 配置来自 define:vars 注入的 JSON 字符串；解析失败时优雅退出，
     // 不能让一个解析异常把整个音乐模块的初始化带崩。
@@ -441,7 +441,7 @@ const managerConfigStr = JSON.stringify({
     }
 
     // ── Public API ───────────────────────────────────────────
-    window.__fireflyMusic = {
+    window.__starseekerMusic = {
         init: init,
         getState: function () {
             var track = state.playlist[state.currentIndex] || null;
