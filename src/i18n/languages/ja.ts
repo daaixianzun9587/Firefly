@@ -341,4 +341,10 @@ export const ja: Translation = {
 	[Key.fontSizeXLarge]: "特大",
 	[Key.attachments]: "添付ファイル",
 	[Key.download]: "ダウンロード",
+	[Key.qqPageTitle]: "QQ で追加",
+	[Key.qqPageDescription]: "QR コードを読み取るか QQ 番号で検索して追加",
+	[Key.qqScanTip]:
+		"スマホの QQ で「スキャン」を開き上の QR コードを読み取るか、下の番号を検索して追加してください。",
+	[Key.qqCopy]: "コピー",
+	[Key.qqCopied]: "コピーしました",
 };

@@ -1,0 +1,700 @@
+---
+import { Icon } from "astro-icon/components";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { url } from "@/utils/url-utils";
+
+const title = i18n(I18nKey.qqPageTitle);
+const description = i18n(I18nKey.qqPageDescription);
+
+// 展示用 QQ 号：与图片中的号码一致
+const qqNumber = "1810004836";
+const qrImage = url("/assets/images/qq-card.png");
+---
+
+<MainGridLayout title={title} description={description}>
+  <div class="flex w-full rounded-(--radius-large) overflow-hidden relative">
+    <div
+      class="qq-stage card-base relative w-full overflow-hidden flex items-center justify-center px-5 py-10 md:px-9 md:py-14"
+    >
+      {/* 星场画布（背景层） */}
+      <canvas class="qq-canvas absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+
+      {/* 主题色光晕（氛围层） */}
+      <div class="qq-glow qq-glow-a" aria-hidden="true"></div>
+      <div class="qq-glow qq-glow-b" aria-hidden="true"></div>
+
+      {/* 内容层 */}
+      <div class="relative z-10 flex w-full max-w-2xl flex-col items-center">
+        <!-- 标题区 -->
+        <div class="qq-rise flex items-center gap-3 mb-2" style="--qq-delay: 0ms">
+          <span
+            class="flex h-11 w-11 items-center justify-center rounded-xl bg-(--primary)/12 ring-1 ring-(--primary)/25"
+          >
+            <Icon name="fa7-brands:qq" class="text-2xl text-(--primary)" />
+          </span>
+          <div class="text-left">
+            <div class="text-2xl font-bold tracking-tight text-black/85 dark:text-white/90">
+              {title}
+            </div>
+            <div class="text-xs text-black/40 dark:text-white/40 mt-0.5">{description}</div>
+          </div>
+        </div>
+
+        <!-- 分隔光带 -->
+        <div
+          class="qq-rise qq-beam mb-7 md:mb-9"
+          style="--qq-delay: 80ms"
+          aria-hidden="true"
+        >
+        </div>
+
+        <!-- 二维码名片 -->
+        <div class="qq-rise qq-card-wrap" style="--qq-delay: 160ms">
+          <div class="qq-card">
+            <img
+              src={qrImage}
+              alt={title}
+              width="1079"
+              height="1957"
+              loading="eager"
+              decoding="async"
+              class="qq-card-img block h-auto w-full"
+            />
+            <!-- 掠光扫过 -->
+            <span class="qq-sheen" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <!-- QQ 号 + 复制 -->
+        <div
+          class="qq-rise mt-7 flex flex-col items-center gap-3 sm:flex-row sm:gap-4"
+          style="--qq-delay: 240ms"
+        >
+          <div
+            class="flex items-center gap-2.5 rounded-xl bg-black/5 dark:bg-white/10 px-4 py-2.5 ring-1 ring-black/5 dark:ring-white/10"
+          >
+            <Icon name="fa7-brands:qq" class="text-base text-(--primary)" />
+            <span
+              class="qq-mono text-lg font-bold tracking-[0.06em] text-black/80 dark:text-white/85"
+            >
+              {qqNumber}
+            </span>
+          </div>
+
+          <button
+            id="qq-copy"
+            type="button"
+            data-value={qqNumber}
+            data-label-copy={i18n(I18nKey.qqCopy)}
+            data-label-copied={i18n(I18nKey.qqCopied)}
+            class="qq-copy group inline-flex items-center gap-2 rounded-xl bg-(--primary) px-4 py-2.5 text-sm font-medium text-white dark:text-black/70 transition-all duration-200 hover:opacity-90 active:scale-[0.97] cursor-pointer"
+          >
+            <Icon
+              name="material-symbols:content-copy-outline-rounded"
+              class="text-base transition-transform duration-200 group-hover:scale-110"
+            />
+            <span id="qq-copy-label">{i18n(I18nKey.qqCopy)}</span>
+          </button>
+        </div>
+
+        <!-- 提示 -->
+        <p
+          class="qq-rise mt-6 max-w-md text-center text-xs leading-relaxed text-black/35 dark:text-white/35"
+          style="--qq-delay: 320ms"
+        >
+          {i18n(I18nKey.qqScanTip)}
+        </p>
+      </div>
+    </div>
+  </div>
+</MainGridLayout>
+
+<style>
+  /* ============ 舞台 ============ */
+  .qq-stage {
+    min-height: min(78vh, 900px);
+    isolation: isolate;
+  }
+
+  /* ============ 主题色光晕 ============ */
+  .qq-glow {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    filter: blur(70px);
+    opacity: 0.5;
+    z-index: 0;
+    will-change: transform;
+  }
+  .qq-glow-a {
+    width: 46%;
+    aspect-ratio: 1;
+    top: -12%;
+    left: -8%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      oklch(0.72 0.16 var(--hue) / 0.55),
+      transparent 70%
+    );
+    animation: qq-drift-a 18s ease-in-out infinite alternate;
+  }
+  .qq-glow-b {
+    width: 40%;
+    aspect-ratio: 1;
+    bottom: -14%;
+    right: -6%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      oklch(0.78 0.13 calc(var(--hue) + 42) / 0.5),
+      transparent 70%
+    );
+    animation: qq-drift-b 22s ease-in-out infinite alternate;
+  }
+  :global(html.dark) .qq-glow {
+    opacity: 0.34;
+    filter: blur(80px);
+  }
+
+  @keyframes qq-drift-a {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(6%, 5%, 0) scale(1.12);
+    }
+  }
+  @keyframes qq-drift-b {
+    from {
+      transform: translate3d(0, 0, 0) scale(1.06);
+    }
+    to {
+      transform: translate3d(-5%, -6%, 0) scale(0.94);
+    }
+  }
+
+  /* ============ 标题下的光带 ============ */
+  .qq-beam {
+    width: min(260px, 60%);
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.72 0.16 var(--hue) / 0.75),
+      transparent
+    );
+  }
+
+  /* ============ 名片 ============ */
+  .qq-card-wrap {
+    perspective: 1200px;
+  }
+  .qq-card {
+    position: relative;
+    /* 宽度贴合图片比例，避免 contain 造成左右空白 */
+    width: fit-content;
+    max-width: min(340px, 78vw);
+    max-height: min(58vh, 640px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: var(--card-bg);
+    box-shadow:
+      0 1px 0 0 oklch(1 0 0 / 0.6) inset,
+      0 18px 40px -18px oklch(0.4 0.05 var(--hue) / 0.35),
+      0 40px 90px -40px oklch(0.5 0.12 var(--hue) / 0.45);
+    outline: 1px solid oklch(0.5 0.05 var(--hue) / 0.16);
+    outline-offset: 0;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
+      box-shadow 0.45s ease;
+  }
+  .qq-card::after {
+    /* 环形描边，跟随主题色 */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: 0 0 0 1px oklch(0.72 0.16 var(--hue) / 0.18) inset;
+  }
+  .qq-card-img {
+    border-radius: inherit;
+  }
+  .qq-card-wrap:hover .qq-card {
+    transform: translateY(-6px) rotateX(1.2deg) scale(1.012);
+    box-shadow:
+      0 1px 0 0 oklch(1 0 0 / 0.6) inset,
+      0 26px 54px -20px oklch(0.4 0.05 var(--hue) / 0.4),
+      0 54px 110px -46px oklch(0.5 0.14 var(--hue) / 0.55);
+  }
+  /* 图片长宽比很大（约 0.55），按高度约束、宽度自适应，保持整卡无留白 */
+  .qq-card-img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: min(58vh, 640px);
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* 掠光：一条微弱高光缓慢扫过名片 */
+  .qq-sheen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 42%;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      oklch(1 0 0 / 0.45),
+      transparent
+    );
+    transform: translateX(-160%) skewX(-12deg);
+    animation: qq-sheen 7.5s cubic-bezier(0.5, 0, 0.4, 1) 1.1s infinite;
+    mix-blend-mode: overlay;
+  }
+  :global(html.dark) .qq-sheen {
+    background: linear-gradient(
+      100deg,
+      transparent,
+      oklch(0.85 0.06 var(--hue) / 0.28),
+      transparent
+    );
+  }
+  @keyframes qq-sheen {
+    0% {
+      transform: translateX(-160%) skewX(-12deg);
+    }
+    55%,
+    100% {
+      transform: translateX(260%) skewX(-12deg);
+    }
+  }
+
+  /* ============ 复制按钮 ============ */
+  .qq-copy.is-copied {
+    background: oklch(0.58 0.15 155);
+    color: white;
+  }
+
+  .qq-mono {
+    font-family:
+      "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* ============ 入场 ============ */
+  .qq-rise {
+    opacity: 0;
+    animation: qq-rise 0.72s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+    animation-delay: var(--qq-delay, 0ms);
+  }
+  @keyframes qq-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============ 无障碍：尊重「减少动效」偏好 ============ */
+  @media (prefers-reduced-motion: reduce) {
+    .qq-rise {
+      opacity: 1;
+      animation: none;
+    }
+    .qq-glow,
+    .qq-sheen {
+      animation: none;
+    }
+    .qq-sheen {
+      display: none;
+    }
+    .qq-card-wrap:hover .qq-card {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .qq-stage {
+      min-height: min(70vh, 760px);
+    }
+    .qq-card,
+    .qq-card-img {
+      max-height: min(50vh, 460px);
+    }
+  }
+</style>
+
+<script is:inline>
+  /**
+   * 星场粒子背景。
+   *
+   * 设计目标：跟随站点主题色与明暗模式，克制的深空氛围，不抢名片主体。
+   * 工程要点：
+   * - 颜色从 --primary（oklch）解析并转成 sRGB，兼容所有浏览器；
+   * - DPR 上限 2，粒子数按面积自适应，小屏自动降采样；
+   * - 页面隐藏 / 画布被移除（swup 换页）自动停止，避免残留 rAF；
+   * - 尊重 prefers-reduced-motion：只画一帧静态星图；
+   * - 脚本会被 swup 在导航后重新执行，因此初始化必须幂等（先 dispose 旧实例）。
+   */
+  (function () {
+    var canvas = document.querySelector(".qq-canvas");
+    if (!canvas) return;
+
+    // ---- 幂等：清掉上一次的实例 ----
+    var prev = window.__qqStarfield;
+    if (prev && typeof prev.dispose === "function") {
+      try {
+        prev.dispose();
+      } catch (_e) {
+        /* ignore */
+      }
+    }
+
+    var ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    var host = canvas.parentElement;
+    var reduceMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // ---------- oklch → sRGB ----------
+    function oklchToRgb(l, c, hDeg) {
+      var h = (hDeg * Math.PI) / 180;
+      var a = c * Math.cos(h);
+      var b = c * Math.sin(h);
+
+      var l_ = l + 0.3963377774 * a + 0.2158037573 * b;
+      var m_ = l - 0.1055613458 * a - 0.0638541728 * b;
+      var s_ = l - 0.0894841775 * a - 1.291485548 * b;
+
+      var L = l_ * l_ * l_;
+      var M = m_ * m_ * m_;
+      var S = s_ * s_ * s_;
+
+      var r = 4.0767416621 * L - 3.3077115913 * M + 0.2309699292 * S;
+      var g = -1.2684380046 * L + 2.6097574011 * M - 0.3413193965 * S;
+      var b2 = -0.0041960863 * L - 0.7034186147 * M + 1.707614701 * S;
+
+      function gamma(x) {
+        x = x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055;
+        return Math.max(0, Math.min(255, Math.round(x * 255)));
+      }
+      return [gamma(r), gamma(g), gamma(b2)];
+    }
+
+    function readTheme() {
+      var cs = getComputedStyle(document.documentElement);
+      var isDark = document.documentElement.classList.contains("dark");
+      var raw = (cs.getPropertyValue("--primary") || "").trim();
+      var hue = parseFloat(cs.getPropertyValue("--hue")) || 165;
+      var m = /oklch\(\s*([\d.]+%?)\s+([\d.]+%?)\s+([\d.]+)(?:deg)?/i.exec(raw);
+      var l = 0.55;
+      var c = 0.14;
+      var hh = hue;
+      if (m) {
+        l = m[1].indexOf("%") >= 0 ? parseFloat(m[1]) / 100 : parseFloat(m[1]);
+        c = m[2].indexOf("%") >= 0 ? parseFloat(m[2]) / 100 : parseFloat(m[2]);
+        hh = parseFloat(m[3]);
+      }
+      // 浅色底需要更深的粒子，暗色底需要更亮的粒子
+      var pl = isDark ? Math.min(0.84, l + 0.1) : Math.max(0.42, l - 0.2);
+      var pc = isDark ? c * 1.05 : c * 1.15;
+      return {
+        isDark: isDark,
+        rgb: oklchToRgb(pl, pc, hh),
+        accentRgb: oklchToRgb(pl + (isDark ? 0.03 : -0.06), pc * 0.9, hh + 40),
+        lineAlpha: isDark ? 0.2 : 0.14,
+        dotAlpha: isDark ? 0.9 : 0.7,
+      };
+    }
+
+    var theme = readTheme();
+
+    // ---------- 尺寸与粒子 ----------
+    var dpr = 1;
+    var W = 0;
+    var H = 0;
+    var particles = [];
+    var pointer = { x: -9999, y: -9999, active: false };
+    var rafId = 0;
+    var running = false;
+
+    function buildParticles() {
+      var area = W * H;
+      // 面积自适应：约每 11000 px² 一个点，限制在 26~110 之间
+      var count = Math.round(area / 11000);
+      count = Math.max(26, Math.min(110, count));
+
+      particles = [];
+      for (var i = 0; i < count; i++) {
+        // 三层视差：远层小而慢、近层大而快
+        var depth = Math.random();
+        var isAccent = Math.random() < 0.16;
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * (0.06 + depth * 0.24),
+          vy: (Math.random() - 0.5) * (0.06 + depth * 0.24) - 0.03,
+          r: 0.6 + depth * 1.7,
+          alpha: 0.28 + depth * 0.5,
+          accent: isAccent,
+          phase: Math.random() * Math.PI * 2,
+          twinkle: 0.6 + Math.random() * 1.6,
+        });
+      }
+    }
+
+    function resize() {
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      var rect = host.getBoundingClientRect();
+      W = Math.max(1, Math.round(rect.width));
+      H = Math.max(1, Math.round(rect.height));
+
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      canvas.style.width = W + "px";
+      canvas.style.height = H + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      buildParticles();
+      if (!running) draw(performance.now());
+    }
+
+    var LINK_DIST = 118;
+    var MOUSE_R = 150;
+
+    function draw(now) {
+      theme = theme || readTheme();
+      ctx.clearRect(0, 0, W, H);
+
+      var i;
+      var j;
+      var p;
+
+      // ---- 连线（只连较近的，避免糊成一团）----
+      ctx.lineWidth = 1;
+      for (i = 0; i < particles.length; i++) {
+        p = particles[i];
+        for (j = i + 1; j < particles.length; j++) {
+          var q = particles[j];
+          var dx = p.x - q.x;
+          var dy = p.y - q.y;
+          var d2 = dx * dx + dy * dy;
+          if (d2 > LINK_DIST * LINK_DIST) continue;
+          var d = Math.sqrt(d2);
+          var a = (1 - d / LINK_DIST) * theme.lineAlpha;
+          if (a <= 0.004) continue;
+          ctx.strokeStyle = "rgba(" + theme.rgb[0] + "," + theme.rgb[1] + "," + theme.rgb[2] + "," + a.toFixed(3) + ")";
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.stroke();
+        }
+      }
+
+      // ---- 星点 ----
+      for (i = 0; i < particles.length; i++) {
+        p = particles[i];
+
+        // 漂移
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // 边界回绕
+        if (p.x < -8) p.x = W + 8;
+        else if (p.x > W + 8) p.x = -8;
+        if (p.y < -8) p.y = H + 8;
+        else if (p.y > H + 8) p.y = -8;
+
+        // 呼吸闪烁
+        var tw = reduceMotion ? 1 : 0.72 + Math.sin(now / 900 + p.phase) * 0.28 * p.twinkle;
+
+        // 鼠标引力 + 高亮
+        var boost = 0;
+        if (pointer.active) {
+          var mdx = pointer.x - p.x;
+          var mdy = pointer.y - p.y;
+          var md = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (md < MOUSE_R && md > 0.001) {
+            var f = (1 - md / MOUSE_R) * 0.55;
+            p.x += (mdx / md) * f;
+            p.y += (mdy / md) * f;
+            boost = (1 - md / MOUSE_R) * 0.6;
+            // 与光标的细连线
+            ctx.strokeStyle =
+              "rgba(" + theme.accentRgb[0] + "," + theme.accentRgb[1] + "," + theme.accentRgb[2] + "," + (boost * theme.lineAlpha * 3.2).toFixed(3) + ")";
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(pointer.x, pointer.y);
+            ctx.stroke();
+          }
+        }
+
+        var r = p.r * (1 + boost * 0.5);
+        var alpha = Math.min(1, p.alpha * tw * theme.dotAlpha + boost);
+        var col = p.accent ? theme.accentRgb : theme.rgb;
+
+        ctx.fillStyle = "rgba(" + col[0] + "," + col[1] + "," + col[2] + "," + alpha.toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 少量星点加柔光
+        if (p.r > 1.6) {
+          ctx.fillStyle = "rgba(" + col[0] + "," + col[1] + "," + col[2] + "," + (alpha * 0.12).toFixed(3) + ")";
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r * 3.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function loop(now) {
+      if (!canvas.isConnected) {
+        dispose();
+        return;
+      }
+      if (!document.hidden) draw(now);
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function dispose() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+      if (ro) ro.disconnect();
+      if (themeObserver) themeObserver.disconnect();
+      window.removeEventListener("resize", onResize);
+      host.removeEventListener("pointermove", onPointerMove);
+      host.removeEventListener("pointerleave", onPointerLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
+    }
+
+    // ---------- 事件 ----------
+    var resizeTimer = 0;
+    function onResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 140);
+    }
+    function onPointerMove(e) {
+      var rect = host.getBoundingClientRect();
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
+      pointer.active = true;
+      // 减少动效模式没有 rAF 循环，靠事件驱动重绘
+      if (reduceMotion) draw(performance.now());
+    }
+    function onPointerLeave() {
+      pointer.active = false;
+      pointer.x = -9999;
+      pointer.y = -9999;
+      if (reduceMotion) draw(performance.now());
+    }
+    function onVisibility() {
+      if (!document.hidden && !reduceMotion) start();
+    }
+
+    var ro = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(onResize);
+      ro.observe(host);
+    }
+    window.addEventListener("resize", onResize);
+    host.addEventListener("pointermove", onPointerMove, { passive: true });
+    host.addEventListener("pointerleave", onPointerLeave);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    // 主题切换（.dark 类变化 / --primary 变化）后重新取色
+    var themeObserver = null;
+    if (typeof MutationObserver !== "undefined") {
+      themeObserver = new MutationObserver(function () {
+        theme = readTheme();
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class", "style", "data-theme"],
+      });
+    }
+
+    resize();
+    if (reduceMotion) {
+      // 静态星图：不跑 rAF，只在尺寸变化 / 鼠标移动时重绘（监听已在上面统一绑定）
+      running = true;
+      window.__qqStarfield = {
+        dispose: dispose,
+        refresh: function () {
+          draw(performance.now());
+        },
+      };
+    } else {
+      start();
+      window.__qqStarfield = { dispose: dispose };
+    }
+  })();
+
+  /**
+   * QQ 号复制。
+   * 同样会被 swup 重跑，所以用「直接绑定 + 幂等标记」处理。
+   */
+  (function () {
+    var btn = document.getElementById("qq-copy");
+    if (!btn || btn.dataset.bound === "1") return;
+    btn.dataset.bound = "1";
+
+    var label = document.getElementById("qq-copy-label");
+    var timer = 0;
+
+    function fallbackCopy(text) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "readonly");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (_e) {
+        ok = false;
+      }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-value") || "";
+      var done = function () {
+        btn.classList.add("is-copied");
+        if (label) label.textContent = btn.getAttribute("data-label-copied") || "";
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove("is-copied");
+          if (label) label.textContent = btn.getAttribute("data-label-copy") || "";
+        }, 1600);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {
+          if (fallbackCopy(text)) done();
+        });
+      } else if (fallbackCopy(text)) {
+        done();
+      }
+    });
+  })();
+</script>

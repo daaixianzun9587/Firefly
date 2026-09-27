@@ -328,6 +328,11 @@ enum I18nKey {
 	fontSizeXLarge = "fontSizeXLarge",
 	attachments = "attachments",
 	download = "download",
+	qqPageTitle = "qqPageTitle",
+	qqPageDescription = "qqPageDescription",
+	qqScanTip = "qqScanTip",
+	qqCopy = "qqCopy",
+	qqCopied = "qqCopied",
 }
 
 export default I18nKey;

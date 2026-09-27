@@ -342,4 +342,10 @@ export const en: Translation = {
 	[Key.fontSizeXLarge]: "X-Large",
 	[Key.attachments]: "Attachments",
 	[Key.download]: "Download",
+	[Key.qqPageTitle]: "Add me on QQ",
+	[Key.qqPageDescription]: "Scan the code or search the QQ number to add me",
+	[Key.qqScanTip]:
+		'Open QQ on your phone, tap "Scan", and scan the code above — or simply search the number below to add me.',
+	[Key.qqCopy]: "Copy",
+	[Key.qqCopied]: "Copied",
 };

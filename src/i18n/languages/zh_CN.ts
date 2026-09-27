@@ -331,4 +331,10 @@ export const zh_CN: Translation = {
 	[Key.fontSizeXLarge]: "特大",
 	[Key.attachments]: "附件下载",
 	[Key.download]: "下载",
+	[Key.qqPageTitle]: "欢迎交流",
+	[Key.qqPageDescription]: "扫码或搜索 QQ 号添加好友",
+	[Key.qqScanTip]:
+		"打开手机 QQ 的「扫一扫」扫描上方二维码，或直接搜索下面的号码添加我为好友。",
+	[Key.qqCopy]: "复制",
+	[Key.qqCopied]: "已复制",
 };

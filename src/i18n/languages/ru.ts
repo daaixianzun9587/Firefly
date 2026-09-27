@@ -343,4 +343,10 @@ export const ru: Translation = {
 	[Key.fontSizeXLarge]: "Очень большой",
 	[Key.attachments]: "Вложения",
 	[Key.download]: "Скачать",
+	[Key.qqPageTitle]: "Добавить в QQ",
+	[Key.qqPageDescription]: "Отсканируйте код или найдите номер QQ",
+	[Key.qqScanTip]:
+		"Откройте QQ на телефоне, нажмите «Сканировать» и наведите на код выше — или просто найдите номер ниже, чтобы добавить меня.",
+	[Key.qqCopy]: "Копировать",
+	[Key.qqCopied]: "Скопировано",
 };

@@ -333,4 +333,10 @@ export const zh_TW: Translation = {
 	[Key.fontSizeXLarge]: "特大",
 	[Key.attachments]: "附件下載",
 	[Key.download]: "下載",
+	[Key.qqPageTitle]: "欢迎交流",
+	[Key.qqPageDescription]: "掃碼或搜尋 QQ 號加為好友",
+	[Key.qqScanTip]:
+		"打開手機 QQ 的「掃一掃」掃描上方 QR Code，或直接搜尋下面的號碼加我為好友。",
+	[Key.qqCopy]: "複製",
+	[Key.qqCopied]: "已複製",
 };

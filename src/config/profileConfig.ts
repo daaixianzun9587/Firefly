@@ -22,21 +22,23 @@ export const profileConfig: ProfileConfig = {
 	// showName: true 时显示图标和名称，false 时只显示图标
 	links: [
 		{
+			// 站内「欢迎交流」页面（QQ 二维码名片 + 粒子背景），页面文件：src/pages/qq.astro
 			name: "qq",
 			icon: "fa7-brands:qq",
-			url: "https://qm.qq.com/q/ZGsFa8qX2G",
+			url: "/qq/",
 			showName: false,
 		},
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
-			url: "https://github.com/CuteLeaf",
+			url: "https://github.com/daaixianzun9587",
 			showName: false,
 		},
 		{
+			// mailto 链接会自动做 base64 防爬虫处理（见 src/components/widget/Profile.astro）
 			name: "Email",
 			icon: "fa7-solid:envelope",
-			url: "mailto:xiaye@msn.com",
+			url: "mailto:1810004836@qq.com",
 			showName: false,
 		},
 		{
